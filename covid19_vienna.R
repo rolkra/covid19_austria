@@ -1,24 +1,26 @@
 # packages
 library(tidyverse)
+library(patchwork)
 
 # reported infections
 # source: APA OTS (https://www.ots.at)
-data <- tribble(
-  ~date,        ~infected,
-  "2020-03-05", 16,
-  "2020-03-06", 23,
-  "2020-03-07", 23,
-  "2020-03-08", 32,
-  "2020-03-09", 33,
-  "2020-03-10", 43,
-  "2020-03-11", 50,
-  "2020-03-12", 66,
-  "2020-03-13", 74,
-  "2020-03-14", 85,
-  "2020-03-15", 122
+infected <- c(
+   16, #"2020-03-05"
+   23, #"2020-03-06"
+   23, #"2020-03-07"
+   32, #"2020-03-08"
+   33, #"2020-03-09"
+   43, #"2020-03-10"
+   50, #"2020-03-11"
+   66, #"2020-03-12"
+   74, #"2020-03-13"
+   85, #"2020-03-14"
+  122  #"2020-03-15"
 )
 
 # prepare data
+data <- tibble(infected = infected)
+
 data <- data %>% 
   mutate(type = "reported",
          day = row_number()) %>% 
@@ -72,7 +74,7 @@ data_plot <- data %>%
 
 
 # visualise data
-# visualise
+# infected
 last_day <- length(data$infected)
 data_plot %>% 
   mutate(infected_M = infected / 1000000) %>% 
@@ -90,4 +92,37 @@ data_plot %>%
   annotate("text", last_day+14, 5, 
            label = "next 4 weeks", size = 2.5)
 
+#############################################
 
+# infected
+p1 <- data %>% 
+  mutate(infected_M = infected / 1000000) %>% 
+  ggplot(aes(day, infected)) + 
+  geom_line(size = 1.5) +
+  xlim(c(1,length(infected)+0.5)) +
+#  ylim(0,1000) +
+#  xlab("Days since outbreak") +
+  xlab("") +
+  ylab("Infected") + 
+#  ggtitle("Covid-19 outbreak in Vienna") +
+  theme_minimal()
+  
+# daily growth infected
+p2 <- data %>% 
+  filter(day >= 5) %>% 
+  ggplot(aes(day, new_pct)) +
+  geom_col(fill = "grey") +
+  geom_text(aes(day, new_pct, 
+                label = paste0(format(new_pct, digits=1),"%")),
+            size = 2.5) +
+  xlim(c(1,length(infected)+0.5)) +
+  ylim(c(0,100)) +
+  xlab("Days since outbreak") +
+  ylab("Daily growth infected") + 
+#  ggtitle("Covid-19 outbreak in Vienna") +
+  
+  theme_minimal()
+
+# combine plots
+(p1 / p2) + plot_annotation('Covid-19 outbreak in Vienna',
+                            caption = "source: APA OTS")
