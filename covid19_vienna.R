@@ -4,6 +4,7 @@ library(patchwork)
 
 # reported infections
 # source: APA OTS (https://www.ots.at)
+# keywords: "kennzahlen corona wien"
 infected <- c(
    16, #"2020-03-05"
    23, #"2020-03-06"
@@ -15,7 +16,8 @@ infected <- c(
    66, #"2020-03-12"
    74, #"2020-03-13"
    85, #"2020-03-14"
-  122  #"2020-03-15"
+  122, #"2020-03-15"
+  128  #"2020-03-16"
 )
 
 # prepare data
@@ -99,8 +101,8 @@ p1 <- data %>%
   mutate(infected_M = infected / 1000000) %>% 
   ggplot(aes(day, infected)) + 
   geom_line(size = 1.5, color = "red") +
-  xlim(c(1,length(infected)+0.5)) +
-#  ylim(0,1000) +
+  xlim(c(1,length(infected)+1)) +
+  ylim(0,max(infected)) +
 #  xlab("Days since outbreak") +
   xlab("") +
   ylab("Infected") + 
@@ -115,14 +117,19 @@ p2 <- data %>%
   geom_text(aes(day, new_pct, 
                 label = paste0(format(new_pct, digits=1),"%")),
             size = 2.5) +
-  xlim(c(1,length(infected)+0.5)) +
+  geom_hline(yintercept = 33, linetype = "dotted") +
+  xlim(c(1,length(infected)+1)) +
   ylim(c(0,100)) +
   xlab("Days since outbreak") +
-  ylab("Daily growth") + 
+  ylab("Daily growth in %") + 
 #  ggtitle("Covid-19 outbreak in Vienna") +
-  
-  theme_minimal()
+  theme_minimal() +
+  annotate("text", 2.5, 33, 
+           label = "33% growth",
+           size = 2.5,
+           vjust = "bottom"
+  ) 
 
 # combine plots
 (p1 / p2) + plot_annotation('Covid-19 outbreak in Vienna',
-                            caption = "source: APA OTS")
+                            caption = "source: APA OTS https://www.ots.at ('kennzahlen corona wien')")

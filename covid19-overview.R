@@ -3,6 +3,7 @@ library(dplyr)
 library(ggplot2)
 library(scales)
 library("zoo")
+library("patchwork")
 
 # read data
 aaa<- read.csv("https://covid.ourworldindata.org/data/full_data.csv")
@@ -10,7 +11,7 @@ aaa$location<- as.character(aaa$location)
 aaa$date<- as.character.Date(aaa$date)
 
 # prepare
-countries <- c("Austria", "Switzerland", "Denmark", "Italy", "Spain", "France")
+countries <- c("Austria","Switzerland", "Denmark", "Italy", "Spain", "France")
 highlight_country <- c("Austria")
 main <- aaa %>% filter(location %in% countries)
 main$death_rate <- main$total_deaths/main$total_cases
@@ -39,7 +40,7 @@ Toty <- Toty %>%
   mutate(highlight = ifelse(location %in% highlight_country, 1, 0.7))
 
 # plot
-ggplot(Toty %>% filter(!location %in% highlight_country), 
+p1 <- ggplot(Toty %>% filter(!location %in% highlight_country), 
        aes(counting,total_cases, colour = location)) +
   geom_line(alpha = 0.7, size = 1.1) +
   geom_line(data = Toty %>% filter(location %in% highlight_country),
@@ -47,8 +48,35 @@ ggplot(Toty %>% filter(!location %in% highlight_country),
             alpha = 1, size = 1.5) +
   scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
     labs(x = "Days since 50 cases are reached", 
-         y = "Total Cases",
+         y = "Total cases",
          title = "Covid-19 Infections in Europe",
          subtitle = "Source: https://covid.ourworldindata.org") +
   theme_minimal()
+
+data <- Toty %>% 
+  arrange(location, date) %>% 
+  mutate(new_abs = total_cases - lag(total_cases),
+         new_pct = new_abs / lag(total_cases) * 100)
+
+p2 <- data %>% 
+  filter(location == highlight_country) %>% 
+  ggplot(aes(x=counting, y=new_pct, fill=location)) +
+  geom_col(color = NA) +
+  geom_text(aes(counting, new_pct, 
+                label = paste0(format(new_pct, digits=1),"%")),
+                size = 2.5,
+                color = "black") +
+#  geom_smooth(se = FALSE) +
+  geom_hline(yintercept = 33, linetype = "dotted") +
+  ylim(c(-10,100)) +
+  xlab("Days since 50 cases are reached") +
+  ylab("Daily growth") +
+  theme_minimal() +
+  annotate("text", 20, 33, 
+           label = "33% growth",
+           size = 2.5,
+           vjust = "bottom"
+           )
+  
+(p1 / p2)
 
