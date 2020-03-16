@@ -98,7 +98,7 @@ data_plot %>%
 p1 <- data %>% 
   mutate(infected_M = infected / 1000000) %>% 
   ggplot(aes(day, infected)) + 
-  geom_line(size = 1.5) +
+  geom_line(size = 1.5, color = "red") +
   xlim(c(1,length(infected)+0.5)) +
 #  ylim(0,1000) +
 #  xlab("Days since outbreak") +
@@ -118,7 +118,7 @@ p2 <- data %>%
   xlim(c(1,length(infected)+0.5)) +
   ylim(c(0,100)) +
   xlab("Days since outbreak") +
-  ylab("Daily growth infected") + 
+  ylab("Daily growth") + 
 #  ggtitle("Covid-19 outbreak in Vienna") +
   
   theme_minimal()
