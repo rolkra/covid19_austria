@@ -108,7 +108,7 @@ p1 <- data %>%
   scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
   #  xlab("Days since outbreak") +
   xlab("") +
-  ylab("Infected") + 
+  ylab("Confirmed infections") + 
 #  ggtitle("Covid-19 outbreak in Vienna") +
   theme_minimal()
   
