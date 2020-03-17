@@ -1,5 +1,6 @@
 # packages
 library(tidyverse)
+library(scales)
 library(patchwork)
 
 # reported infections
@@ -103,7 +104,8 @@ p1 <- data %>%
   geom_line(size = 1.5, color = "red") +
   xlim(c(1,length(infected)+1)) +
   ylim(0,max(infected)) +
-#  xlab("Days since outbreak") +
+  scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
+  #  xlab("Days since outbreak") +
   xlab("") +
   ylab("Infected") + 
 #  ggtitle("Covid-19 outbreak in Vienna") +

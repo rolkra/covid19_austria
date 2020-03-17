@@ -1,12 +1,22 @@
 # packages
 library(tidyverse)
+library(lubridate)
+library(scales)
 
-# reported infections (per week)
-# source: https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv
-infected <- c(2,2,3,3,9,14,
-              18,21,29,41,55,79,104,
-              131,182,246,302,504)
+# read data
+raw <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv")
 
+work <- raw %>% 
+  pivot_longer(cols = starts_with("X"),
+               names_to = "date") %>% 
+  mutate(date = substr(date,2,8)) %>% 
+  mutate(date = mdy(date))
+
+infected <- work %>% 
+  filter(Country.Region == "Austria",
+         value > 0) %>% 
+  pull(value)
+  
 # prepare dataset
 data <- tibble(infected = infected)
 
@@ -78,3 +88,44 @@ data_plot %>%
            label = "until today", size = 2.5) +
   annotate("text", last_day+14, 5, 
            label = "next 4 weeks", size = 2.5)
+
+#############################################
+
+# infected
+p1 <- data %>% 
+  mutate(infected_M = infected / 1000000) %>% 
+  ggplot(aes(day, infected)) + 
+  geom_line(size = 1.5, color = "red") +
+  xlim(c(1,length(infected)+1)) +
+  ylim(0,max(infected)) +
+  scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
+  #  xlab("Days since outbreak") +
+  xlab("") +
+  ylab("Confirmed infections") + 
+  #  ggtitle("Covid-19 outbreak in Vienna") +
+  theme_minimal()
+
+# daily growth infected
+p2 <- data %>% 
+  filter(day >= 5) %>% 
+  ggplot(aes(day, new_pct)) +
+  geom_col(fill = "grey") +
+  geom_text(aes(day, new_pct, 
+                label = paste0(format(new_pct, digits=1),"%")),
+            size = 2.5) +
+  geom_hline(yintercept = 33, linetype = "dotted") +
+  xlim(c(1,length(infected)+1)) +
+  ylim(c(0,100)) +
+  xlab("Days since outbreak") +
+  ylab("Daily growth in %") + 
+  #  ggtitle("Covid-19 outbreak in Vienna") +
+  theme_minimal() +
+  annotate("text", 2.5, 33, 
+           label = "33% growth",
+           size = 2.5,
+           vjust = "bottom"
+  ) 
+
+# combine plots
+(p1 / p2) + plot_annotation('Covid-19 outbreak in Austria',
+                            caption = "source: https://github.com/CSSEGISandData/COVID-19")
