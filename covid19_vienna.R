@@ -120,7 +120,7 @@ p2 <- data %>%
   geom_col(fill = "grey") +
   geom_text(aes(day, new_pct, 
                 label = paste0(format(new_pct, digits=1),"%")),
-            size = 2.5) +
+            size = 2) +
   geom_hline(yintercept = 33, linetype = "dotted") +
   xlim(c(1,length(infected)+1)) +
   ylim(c(0,100)) +
@@ -130,10 +130,17 @@ p2 <- data %>%
   theme_minimal() +
   annotate("text", 2.5, 33, 
            label = "33% growth",
-           size = 2.5,
+           size = 2,
            vjust = "bottom"
   ) 
 
 # combine plots
-((p1 / p2) | p0) + plot_annotation('Covid-19 outbreak in Vienna',
+p <- ((p1 / p2) | p0) + plot_annotation('Covid-19 outbreak in Vienna',
                             caption = "source: APA OTS https://www.ots.at ('kennzahlen corona wien')")
+# plot
+p
+
+# save plot
+p %>% ggsave(filename = "covid-19-vienna.png", 
+             device = "png",
+             width = 10, height = 5)

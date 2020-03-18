@@ -83,7 +83,7 @@ p0 <- data_plot %>%
              linetype = "dotted") +
   ylim(0,5.5) +
   xlab("Days since outbreak") +
-  ylab("Infected in Mio") + 
+  ylab("Confirmed infections in Mio") + 
   #ggtitle("Covid-19 outbreak in Austria") +
   theme_minimal()+
   annotate("text", last_day/2, 5, 
@@ -114,7 +114,7 @@ p2 <- data %>%
   geom_col(fill = "grey") +
   geom_text(aes(day, new_pct, 
                 label = paste0(format(new_pct, digits=1),"%")),
-            size = 2.5) +
+            size = 2) +
   geom_hline(yintercept = 33, linetype = "dotted") +
   xlim(c(1,length(infected)+1)) +
   ylim(c(0,100)) +
@@ -124,10 +124,18 @@ p2 <- data %>%
   theme_minimal() +
   annotate("text", 2.5, 33, 
            label = "33% growth",
-           size = 2.5,
+           size = 2,
            vjust = "bottom"
   ) 
 
 # combine plots
-((p1 / p2) | p0) + plot_annotation('Covid-19 outbreak in Austria',
+p <- ((p1 / p2) | p0) + plot_annotation('Covid-19 outbreak in Austria',
                             caption = "source: https://github.com/CSSEGISandData/COVID-19")
+
+# plot
+p
+
+# save plot
+p %>% ggsave(filename = "covid-19-austria.png", 
+             device = "png",
+             width = 10, height = 5)
