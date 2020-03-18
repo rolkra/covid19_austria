@@ -75,7 +75,7 @@ data_plot <- data %>%
 
 # visualise
 last_day <- length(infected)
-data_plot %>% 
+p0 <- data_plot %>% 
   mutate(infected_M = infected / 1000000) %>% 
   ggplot(aes(day, infected_M, color = type)) + 
   geom_line(size = 1.5) +
@@ -84,7 +84,7 @@ data_plot %>%
   ylim(0,5.5) +
   xlab("Days since outbreak") +
   ylab("Infected in Mio") + 
-  ggtitle("Covid-19 outbreak in Austria") +
+  #ggtitle("Covid-19 outbreak in Austria") +
   theme_minimal()+
   annotate("text", last_day/2, 5, 
            label = "until today", size = 2.5) +
@@ -129,5 +129,5 @@ p2 <- data %>%
   ) 
 
 # combine plots
-(p1 / p2) + plot_annotation('Covid-19 outbreak in Austria',
+((p1 / p2) | p0) + plot_annotation('Covid-19 outbreak in Austria',
                             caption = "source: https://github.com/CSSEGISandData/COVID-19")
