@@ -40,7 +40,7 @@ Toty <- Toty %>%
   mutate(highlight = ifelse(location %in% highlight_country, 1, 0.7))
 
 # plot
-ggplot(Toty %>% filter(!location %in% highlight_country), 
+p <- ggplot(Toty %>% filter(!location %in% highlight_country), 
        aes(counting,total_cases, colour = location)) +
   geom_line(alpha = 0.7, size = 1.1) +
   geom_line(data = Toty %>% filter(location %in% highlight_country),
@@ -52,4 +52,14 @@ ggplot(Toty %>% filter(!location %in% highlight_country),
          title = "Covid-19 Infections in Europe",
          subtitle = "Source: https://covid.ourworldindata.org") +
   theme_minimal()
+
+
+# plot
+p
+
+# save plot
+p %>% ggsave(filename = "covid-19-overview-sel.png", 
+             device = "png",
+             width = 10, height = 5)
+
 
