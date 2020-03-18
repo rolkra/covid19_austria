@@ -19,7 +19,8 @@ infected <- c(
    85, #"2020-03-14"
   122, #"2020-03-15"
   128, #"2020-03-16"
-  166  #"2020-03-17"
+  166, #"2020-03-17"
+  185
 )
 
 # prepare data
@@ -74,22 +75,22 @@ data_10 <- data %>%
 
 # combine dataset
 data_plot <- data %>% 
-  bind_rows(data_50, data_40, data_33, data_20, data_15, data_10)
+  bind_rows(data_33, data_20, data_10)
 
 
 # visualise data
 # infected
 last_day <- length(data$infected)
-data_plot %>% 
-  mutate(infected_M = infected / 1000000) %>% 
-  ggplot(aes(day, infected, color = type)) + 
+p0 <- data_plot %>% 
+  mutate(infected_M = infected / 1000000) %>%
+  ggplot(aes(day, infected_M, color = type)) + 
   geom_line(size = 1.5) +
   geom_vline(xintercept = c(last_day, last_day + 28), 
              linetype = "dotted") +
-  ylim(0,1000) +
+  ylim(0,1) +
   xlab("Days since outbreak") +
-  ylab("Infected") + 
-  ggtitle("Covid-19 outbreak in Vienna") +
+  ylab("Infected in Mio") + 
+  #ggtitle("Covid-19 outbreak in Vienna") +
   theme_minimal()+
   annotate("text", last_day/2, 5, 
            label = "until today", size = 2.5) +
@@ -134,5 +135,5 @@ p2 <- data %>%
   ) 
 
 # combine plots
-(p1 / p2) + plot_annotation('Covid-19 outbreak in Vienna',
+((p1 / p2) | p0) + plot_annotation('Covid-19 outbreak in Vienna',
                             caption = "source: APA OTS https://www.ots.at ('kennzahlen corona wien')")
