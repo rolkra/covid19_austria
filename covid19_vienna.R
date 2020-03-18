@@ -89,12 +89,12 @@ p0 <- data_plot %>%
              linetype = "dotted") +
   ylim(0,1) +
   xlab("Days since outbreak") +
-  ylab("Infected in Mio") + 
+  ylab("Confirmed infections in Mio") + 
   #ggtitle("Covid-19 outbreak in Vienna") +
   theme_minimal()+
-  annotate("text", last_day/2, 5, 
+  annotate("text", last_day/2, 0.1, 
            label = "until today", size = 2.5) +
-  annotate("text", last_day+14, 5, 
+  annotate("text", last_day+14, 0.1, 
            label = "next 4 weeks", size = 2.5)
 
 #############################################
