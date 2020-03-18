@@ -1,5 +1,6 @@
 # packages
 library(tidyverse)
+library(patchwork)
 library(lubridate)
 library(scales)
 
@@ -12,6 +13,7 @@ work <- raw %>%
   mutate(date = substr(date,2,8)) %>% 
   mutate(date = mdy(date))
 
+# select data for Austria
 infected <- work %>% 
   filter(Country.Region == "Austria",
          value > 0) %>% 
