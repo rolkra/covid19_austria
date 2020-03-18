@@ -48,7 +48,7 @@ p1 <- ggplot(Toty %>% filter(!location %in% highlight_country),
             alpha = 1, size = 1.5) +
   scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
     labs(x = "Days since 50 cases are reached", 
-         y = "Total cases",
+         y = "Total confirmed infections",
          title = "Covid-19 Infections in Europe",
          subtitle = "Source: https://covid.ourworldindata.org") +
   theme_minimal()
@@ -77,6 +77,18 @@ p2 <- data %>%
            size = 2.5,
            vjust = "bottom"
            )
-  
-(p1 / p2)
+
+# combine plots  
+p <- (p1 / p2)
+
+
+# plot
+p
+
+# save plot
+p %>% ggsave(filename = "covid-19-overview.png", 
+             device = "png",
+             width = 10, height = 5)
+
+
 
