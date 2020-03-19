@@ -13,21 +13,30 @@ work <- raw %>%
   mutate(date = substr(date,2,8)) %>% 
   mutate(date = mdy(date))
 
-# select data for Austria
-infected <- work %>% 
-  filter(Country.Region == "Austria",
-         value > 0) %>% 
-  pull(value)
-  
-# prepare dataset
-data <- tibble(infected = infected)
+# define countries
+countries <- c("Austria","Italy","Spain","Switzerland", "France", "Germany")
 
+# filter countries
+work <- work %>% 
+  filter(Country.Region %in% countries,
+         (Province.State =="" | Province.State %in% countries),
+         value > 0) %>% 
+  mutate(country = Country.Region,
+         type = "reported") 
+
+# days
+data <- work %>% 
+  arrange(country, date) %>% 
+  group_by(country) %>% 
+  mutate(day = row_number(),
+         infected = value)
+
+# new infections
 data <- data %>% 
-  mutate(type = "reported",
-         day = row_number()) %>% 
-  arrange(day) %>% 
+  group_by(country) %>% 
   mutate(new_abs = infected - lag(infected),
-         new_pct = new_abs / lag(infected) * 100)
+         new_pct = new_abs / lag(infected) * 100) %>% 
+  ungroup()
 
 # predict
 predict_corona <- function(data, infection_rate, days)  {
@@ -41,40 +50,47 @@ predict_corona <- function(data, infection_rate, days)  {
     infected_all <- c(infected_all, infected_act)
   }
   
-  data2 <- tibble(type = paste("growth", infection_rate),
+  data2 <- tibble(type = paste0("growth ", (infection_rate-1)*100,"%"),
                   day = future, 
                   infected = infected_all)
   data2
   
 } # predict_corona
 
-# predict for different growth
+#############################################
+# predict growth
+#############################################
+
 predict_days <- 50 #57
 
-data_50 <- data %>% 
+predict_data <- data %>% 
+  filter(country == "Austria") %>% 
+  select(type, day, infected)
+
+data_50 <- predict_data %>% 
   predict_corona(infection_rate = 1.50, days = predict_days)
 
-data_40 <- data %>% 
+data_40 <- predict_data %>% 
   predict_corona(infection_rate = 1.40, days = predict_days)
 
-data_33 <- data %>% 
+data_33 <- predict_data %>% 
   predict_corona(infection_rate = 1.33, days = predict_days)
 
-data_20 <- data %>% 
+data_20 <- predict_data %>% 
   predict_corona(infection_rate = 1.20, days = predict_days)
 
-data_15 <- data %>% 
+data_15 <- predict_data %>% 
   predict_corona(infection_rate = 1.15, days = predict_days)
 
-data_10 <- data %>% 
+data_10 <- predict_data %>% 
   predict_corona(infection_rate = 1.10, days = predict_days)
 
 # combine dataset
-data_plot <- data %>% 
+data_plot <- predict_data %>% 
   bind_rows(data_50, data_40, data_33, data_20, data_15, data_10)
 
 # visualise
-last_day <- length(infected)
+last_day <- nrow(predict_data)
 p0 <- data_plot %>% 
   mutate(infected_M = infected / 1000000) %>% 
   ggplot(aes(day, infected_M, color = type)) + 
@@ -92,33 +108,43 @@ p0 <- data_plot %>%
            label = "next 4 weeks", size = 2.5)
 
 #############################################
+# confirmed infections
+#############################################
+
+data_countries <- data %>% 
+  filter(infected >= 50) %>% 
+  arrange(country, day) %>% 
+  group_by(country) %>% 
+  mutate(day = row_number()) %>% 
+  ungroup() %>% 
+  mutate(infected_M = infected / 1000000)
+
+highlight_country <- "Austria"
 
 # infected
-p1 <- data %>% 
-  mutate(infected_M = infected / 1000000) %>% 
-  ggplot(aes(day, infected)) + 
-  geom_line(size = 1.5, color = "red") +
-  xlim(c(1,length(infected)+1)) +
-  ylim(0,max(infected)) +
+p1 <- ggplot(data = data_countries %>% filter(!country %in% highlight_country), 
+             aes(day,infected, colour = country)) +
+  geom_line(alpha = 0.7, size = 1.1) +
+  geom_line(data = data_countries %>% filter(country %in% highlight_country),
+            aes(day,infected, colour = country), 
+            alpha = 1, size = 1.5) +
   scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
-  #  xlab("Days since outbreak") +
-  xlab("") +
-  ylab("Confirmed infections") + 
-  #  ggtitle("Covid-19 outbreak in Vienna") +
+  labs(x = "Days since 50 cases", 
+       y = "Confirmed infections") +
+  ggtitle("Covid-19 outbreak in Europe") +
   theme_minimal()
 
 # daily growth infected
-p2 <- data %>% 
-  filter(day >= 5) %>% 
+p2 <- data_countries %>% 
+  filter(country == highlight_country) %>% 
   ggplot(aes(day, new_pct)) +
   geom_col(fill = "grey") +
   geom_text(aes(day, new_pct, 
                 label = paste0(format(new_pct, digits=1),"%")),
             size = 2) +
   geom_hline(yintercept = 33, linetype = "dotted") +
-  xlim(c(1,length(infected)+1)) +
   ylim(c(0,100)) +
-  xlab("Days since outbreak") +
+  xlab("Days since 50 cases") +
   ylab("Daily growth in %") + 
   #  ggtitle("Covid-19 outbreak in Vienna") +
   theme_minimal() +
@@ -136,6 +162,6 @@ p <- ((p1 / p2) | p0) + plot_annotation('Covid-19 outbreak in Austria',
 p
 
 # save plot
-p %>% ggsave(filename = "covid-19-austria.png", 
+p1 %>% ggsave(filename = "covid-19-austria-europe.png", 
              device = "png",
              width = 7, height = 4)
