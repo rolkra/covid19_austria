@@ -41,7 +41,7 @@ predict_corona <- function(data, infection_rate, days)  {
     infected_all <- c(infected_all, infected_act)
   }
   
-  data2 <- tibble(type = paste("growth", infection_rate),
+  data2 <- tibble(type = paste0("growth ", (infection_rate-1)*100,"%"),
                   day = future, 
                   infected = infected_all)
   data2

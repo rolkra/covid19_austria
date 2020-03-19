@@ -46,7 +46,7 @@ predict_corona <- function(data, infection_rate, days)  {
     infected_all <- c(infected_all, infected_act)
   }
   
-  data2 <- tibble(type = paste("growth", infection_rate),
+  data2 <- tibble(type = paste0("growth ", (infection_rate-1)*100,"%"),
                   day = future, 
                   infected = infected_all)
   data2
@@ -93,9 +93,9 @@ p0 <- data_plot %>%
   ylab("Confirmed infections in Mio") + 
   #ggtitle("Covid-19 outbreak in Vienna") +
   theme_minimal()+
-  annotate("text", last_day/2, 0.1, 
+  annotate("text", last_day/2, 0.9, 
            label = "until today", size = 2.5) +
-  annotate("text", last_day+14, 0.1, 
+  annotate("text", last_day+14, 0.9, 
            label = "next 4 weeks", size = 2.5)
 
 #############################################
