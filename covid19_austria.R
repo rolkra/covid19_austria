@@ -71,7 +71,7 @@ data_10 <- data %>%
 
 # combine dataset
 data_plot <- data %>% 
-  bind_rows(data_50, data_40, data_33, data_20, data_15, data_10)
+  bind_rows(data_33, data_20, data_15, data_10)
 
 # visualise
 last_day <- length(infected)
