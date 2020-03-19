@@ -20,7 +20,8 @@ infected <- c(
   122, #"2020-03-15"
   128, #"2020-03-16"
   166, #"2020-03-17"
-  185
+  185, #"2020-03-18"
+  240  #"2020-03-19"
 )
 
 # prepare data
@@ -143,4 +144,4 @@ p
 # save plot
 p %>% ggsave(filename = "covid-19-vienna.png", 
              device = "png",
-             width = 10, height = 5)
+             width = 7, height = 4)

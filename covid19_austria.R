@@ -138,4 +138,4 @@ p
 # save plot
 p %>% ggsave(filename = "covid-19-austria.png", 
              device = "png",
-             width = 10, height = 5)
+             width = 7, height = 4)
