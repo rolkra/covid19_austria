@@ -3,7 +3,7 @@
 **This COVID-19 analysis is for educational purpose!**
 
 Data based on *2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins*
-CSSEhttps://github.com/CSSEGISandData/COVID-19
+CSSE (https://github.com/CSSEGISandData/COVID-19)
 
 <img src="covid-19-austria.png" alt="Covid-19 Austria" width="800">
 
