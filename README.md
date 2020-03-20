@@ -14,6 +14,9 @@ CSSE (https://github.com/CSSEGISandData/COVID-19)
 <img src="covid-19-vienna.png" alt="Covid-19 Vienna" width="800">
 
 # covid-19 R-Code Toolbox
+
+You can use this toolbox to explore Covid-19 with R-Code:
+
 ```R
 source("covid-19-toolbox.R")
 
