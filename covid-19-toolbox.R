@@ -148,7 +148,7 @@ covid19_plot_infected <- function(data, countries = "Austria", highlight_country
 ## plot szenarios
 #################################################
 
-covid19_plot_szenarios <- function(data, country = "Austria", predict_days = 50, title = NA)  {
+covid19_plot_szenarios <- function(data, country = "Austria", predict_days = 50, max_mio = 2.5, title = NA)  {
 
   predict_data <- data %>% 
     filter(country == .env$country) %>% 
@@ -178,14 +178,14 @@ covid19_plot_szenarios <- function(data, country = "Austria", predict_days = 50,
     geom_line(size = 1.5) +
     geom_vline(xintercept = c(last_day, last_day + 28), 
                linetype = "dotted") +
-    ylim(0,2.5) +
+    ylim(0, max_mio) +
     xlab("Days since outbreak") +
     ylab("Confirmed infections in Mio") + 
     #ggtitle("Covid-19 outbreak in Austria") +
     theme_minimal()+
-    annotate("text", last_day/2, 2.2, 
+    annotate("text", last_day/2, max_mio*0.9, 
              label = "until\ntoday", size = 2.5) +
-    annotate("text", last_day+14, 2.2, 
+    annotate("text", last_day+14, max_mio*0.9, 
              label = "next\n4 weeks", size = 2.5)
 
     # title
