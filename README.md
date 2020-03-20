@@ -13,8 +13,20 @@ CSSE (https://github.com/CSSEGISandData/COVID-19)
 
 <img src="covid-19-vienna.png" alt="Covid-19 Vienna" width="800">
 
+# covid-19 R-Code Toolbox
+```R
+source("covid-19-toolbox.R")
 
-Additional Covid-19 Links:
+data <- covid19_read_infected()
+data %>% 
+  covid19_plot_infected(
+    countries = c("Austria","Italy","China/Hubei"),
+    log = FALSE,
+    min_infected = 100
+  )
+```
+
+# Additional Covid-19 Links
 
 * https://orf.at/corona/daten
 * https://de.wikipedia.org/wiki/COVID-19-Pandemie_in_%C3%96sterreich
