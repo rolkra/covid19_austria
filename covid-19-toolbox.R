@@ -143,3 +143,59 @@ covid19_plot_infected <- function(data, countries = "Austria", highlight_country
   p
   
 } #covid19_plot_infected
+
+#################################################
+## plot szenarios
+#################################################
+
+covid19_plot_szenarios <- function(data, country = "Austria", predict_days = 50, title = NA)  {
+
+  predict_data <- data %>% 
+    filter(country == .env$country) %>% 
+    select(type, day, infected)
+  
+  data_33 <- predict_data %>% 
+    covid19_predict_infections(infection_rate = 1.33, days = predict_days)
+  
+  data_20 <- predict_data %>% 
+    covid19_predict_infections(infection_rate = 1.20, days = predict_days)
+  
+  data_15 <- predict_data %>% 
+    covid19_predict_infections(infection_rate = 1.15, days = predict_days)
+  
+  data_10 <- predict_data %>% 
+    covid19_predict_infections(infection_rate = 1.10, days = predict_days)
+  
+  # combine dataset
+  data_plot <- predict_data %>% 
+    bind_rows(data_33, data_20, data_15, data_10)
+  
+  # visualise
+  last_day <- nrow(predict_data)
+  p <- data_plot %>% 
+    mutate(infected_M = infected / 1000000) %>% 
+    ggplot(aes(day, infected_M, color = type)) + 
+    geom_line(size = 1.5) +
+    geom_vline(xintercept = c(last_day, last_day + 28), 
+               linetype = "dotted") +
+    ylim(0,2.5) +
+    xlab("Days since outbreak") +
+    ylab("Confirmed infections in Mio") + 
+    #ggtitle("Covid-19 outbreak in Austria") +
+    theme_minimal()+
+    annotate("text", last_day/2, 2.2, 
+             label = "until\ntoday", size = 2.5) +
+    annotate("text", last_day+14, 2.2, 
+             label = "next\n4 weeks", size = 2.5)
+
+    # title
+    if (!missing(title)) {
+      p <- p + ggtitle(paste("Covid-19 outbreak in", country))
+    } else {
+      p <- p + ggtitle(paste("Covid-19 outbreak in", country))
+    } 
+  
+    # output
+    p
+    
+} #covid19_plot_szenarios
