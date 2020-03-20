@@ -21,12 +21,16 @@ You can use this toolbox to explore Covid-19 with R-Code:
 source("covid-19-toolbox.R")
 
 data <- covid19_read_infected()
+
 data %>% 
   covid19_plot_infected(
     countries = c("Austria","Italy","China/Hubei"),
     log = FALSE,
     min_infected = 100
   )
+
+data %>% 
+  covid19_plot_szenarios(country = "Spain")
 ```
 
 You may need to install the following R-packages:
