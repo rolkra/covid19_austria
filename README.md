@@ -25,6 +25,7 @@ data <- covid19_read_infected()
 data %>% 
   covid19_plot_infected(
     countries = c("Austria","Italy","China/Hubei"),
+    highlight_country = "Austria",
     log = FALSE,
     min_infected = 100
   )
