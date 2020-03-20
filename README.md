@@ -13,7 +13,7 @@ CSSE (https://github.com/CSSEGISandData/COVID-19)
 
 <img src="covid-19-vienna.png" alt="Covid-19 Vienna" width="800">
 
-# covid-19 R-Code Toolbox
+# Covid-19 R-Code Toolbox
 
 You can use this toolbox to explore Covid-19 with R-Code:
 
@@ -37,9 +37,8 @@ install.packages(c("tidyverse", "lubridate", "scales")
 
 # Additional Covid-19 Links
 
+* https://coronavirus.jhu.edu/map.html
 * https://orf.at/corona/daten
 * https://de.wikipedia.org/wiki/COVID-19-Pandemie_in_%C3%96sterreich
 * https://medium.com/@tomaspueyo/coronavirus-the-hammer-and-the-dance-be9337092b56
-* https://coronavirus.jhu.edu/map.html
-
 
