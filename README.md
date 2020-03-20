@@ -29,6 +29,12 @@ data %>%
   )
 ```
 
+You may need to install the following R-packages:
+
+```R
+install.packages(c("tidyverse", lubridate", "scales")
+```
+
 # Additional Covid-19 Links
 
 * https://orf.at/corona/daten
