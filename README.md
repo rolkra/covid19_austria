@@ -31,6 +31,10 @@ data %>%
 
 data %>% 
   covid19_plot_szenarios(country = "Spain")
+  
+data %>% 
+  covid19_plot_daily_growth(country = "Austria")
+
 ```
 
 You may need to install the following R-packages:
