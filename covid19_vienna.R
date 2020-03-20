@@ -21,7 +21,8 @@ infected <- c(
   128, #"2020-03-16"
   166, #"2020-03-17"
   185, #"2020-03-18"
-  240  #"2020-03-19"
+  240, #"2020-03-19"
+  308  #"2020-03-20"
 )
 
 # prepare data
@@ -100,11 +101,25 @@ p0 <- data_plot %>%
 
 #############################################
 
+# data for reference line 33% growth (Austria)
+data_line_start <- tibble(
+  day = 10,
+  infected = 85
+)
+
+# predict 33% growth (days since 50 cases)
+data_line <- predict_corona(
+  data_line_start,
+  infection_rate = 1.33,
+  days = 7)
+
 # infected
 p1 <- data %>% 
   mutate(infected_M = infected / 1000000) %>% 
   ggplot(aes(day, infected)) + 
   geom_line(size = 1.5, color = "red") +
+  geom_line(data = data_line, 
+            aes(day,infected), color = "grey", alpha = 0.7) +
   xlim(c(1,length(infected)+1)) +
   ylim(0,max(infected)) +
   scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +

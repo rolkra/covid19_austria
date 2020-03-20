@@ -111,6 +111,7 @@ p0 <- data_plot %>%
 # confirmed infections
 #############################################
 
+# data by country (>= 50 confirmed infections)
 data_countries <- data %>% 
   filter(infected >= 50) %>% 
   arrange(country, day) %>% 
@@ -118,6 +119,18 @@ data_countries <- data %>%
   mutate(day = row_number()) %>% 
   ungroup() %>% 
   mutate(infected_M = infected / 1000000)
+
+# data for reference line 33% growth (Austria)
+data_line_start <- tibble(
+  day = 1,
+  infected = 55
+)
+
+# predict 33% growth (days since 50 cases)
+data_line <- predict_corona(
+  data_line_start,
+  infection_rate = 1.33,
+  days = 24)
 
 highlight_country <- "Austria"
 
@@ -128,6 +141,8 @@ p1 <- ggplot(data = data_countries %>% filter(!country %in% highlight_country),
   geom_line(data = data_countries %>% filter(country %in% highlight_country),
             aes(day,infected, colour = country), 
             alpha = 1, size = 1.5) +
+  geom_line(data = data_line, 
+            aes(day,infected), color = "grey", alpha = 0.7) +
   scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
   labs(x = "Days since 50 cases", 
        y = "Confirmed infections") +
