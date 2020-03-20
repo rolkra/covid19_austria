@@ -208,34 +208,48 @@ covid19_plot_daily_growth <- function(data, country = "Austria", min_infected = 
   
   # filter countries
   data <- data %>% filter(country == .env$country)
-  
+
   # overwrite day
   data <- data %>% 
-    filter(infected >= min_infected) %>% 
+    filter(infected >= 1) %>% 
     arrange(country, day) %>% 
     group_by(country) %>% 
     mutate(day = row_number()) %>% 
     ungroup() %>% 
     mutate(infected_M = infected / 1000000)
+  
+  # daily growth infected
+  p <- data %>% 
+    filter(infected >= min_infected) %>% 
+    ggplot(aes(day, new_pct)) +
+    geom_col(fill = "grey") 
+  
+  if (nrow(data) <= 30) {
+    p <- p + 
+      geom_text(aes(day, new_pct, label = 
+                      paste0(format(new_pct, digits=0))),
+                size = 2, 
+                vjust = "bottom", nudge_y = 1)
+      
+  } #if
 
-    # daily growth infected
-    p <- data %>% 
-      ggplot(aes(day, new_pct)) +
-      geom_col(fill = "grey") +
-      geom_text(aes(day, new_pct, 
-                    label = paste0(format(new_pct, digits=0))),
-                size = 2, vjust = "bottom") +
-      geom_hline(yintercept = 33, linetype = "dotted") +
-      ylim(c(0,100)) +
-      xlab(paste("Days since", min_infected, "cases")) +
-      ylab("Daily growth in %") + 
-      #  ggtitle("Covid-19 outbreak in Vienna") +
-      theme_minimal() +
-      annotate("text", 2.5, 33, 
-               label = "33% growth",
-               size = 2,
-               vjust = "bottom"
-      )
+  p <- p +
+    geom_hline(yintercept = 33, linetype = "dotted") +
+    geom_hline(yintercept = 10, linetype = "dotted") +
+    #ylim(c(0,75)) +
+    xlab(paste("Days since outbreak")) +
+    ylab("Daily growth in %") + 
+    #  ggtitle("Covid-19 outbreak in Vienna") +
+    theme_minimal() +
+    annotate("text", 1, 33, 
+             label = "33% growth",
+             size = 2, 
+             vjust = "bottom", hjust = "left") +
+    annotate("text", 1, 10, 
+             label = "10% growth",
+             size = 2, 
+             vjust = "bottom", hjust = "left")
+  
 
   # title
   if (missing(title)) {
