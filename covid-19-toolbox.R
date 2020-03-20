@@ -189,13 +189,62 @@ covid19_plot_szenarios <- function(data, country = "Austria", predict_days = 50,
              label = "next\n4 weeks", size = 2.5)
 
     # title
-    if (!missing(title)) {
+    if (missing(title)) {
       p <- p + ggtitle(paste("Covid-19 outbreak in", country))
     } else {
-      p <- p + ggtitle(paste("Covid-19 outbreak in", country))
+      p <- p + ggtitle(title)
     } 
   
     # output
     p
     
 } #covid19_plot_szenarios
+
+#################################################
+## plot daily growth
+#################################################
+
+covid19_plot_daily_growth <- function(data, country = "Austria", min_infected = 50, title = NA)  {
+  
+  # filter countries
+  data <- data %>% filter(country == .env$country)
+  
+  # overwrite day
+  data <- data %>% 
+    filter(infected >= min_infected) %>% 
+    arrange(country, day) %>% 
+    group_by(country) %>% 
+    mutate(day = row_number()) %>% 
+    ungroup() %>% 
+    mutate(infected_M = infected / 1000000)
+
+    # daily growth infected
+    p <- data %>% 
+      ggplot(aes(day, new_pct)) +
+      geom_col(fill = "grey") +
+      geom_text(aes(day, new_pct, 
+                    label = paste0(format(new_pct, digits=0))),
+                size = 2, vjust = "bottom") +
+      geom_hline(yintercept = 33, linetype = "dotted") +
+      ylim(c(0,100)) +
+      xlab(paste("Days since", min_infected, "cases")) +
+      ylab("Daily growth in %") + 
+      #  ggtitle("Covid-19 outbreak in Vienna") +
+      theme_minimal() +
+      annotate("text", 2.5, 33, 
+               label = "33% growth",
+               size = 2,
+               vjust = "bottom"
+      )
+
+  # title
+  if (missing(title)) {
+    p <- p + ggtitle(paste("Covid-19 outbreak in", country))
+  } else {
+    p <- p + ggtitle(title)
+  } 
+      
+  # output
+  p
+  
+} #covid19_plot_daily_growth
