@@ -139,7 +139,7 @@ p1 <- ggplot(data = data_countries %>% filter(!country %in% highlight_country),
   scale_y_log10(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
   labs(x = "Days since 50 cases", 
        y = "Confirmed infections") +
-  ggtitle("Covid-19 outbreak") +
+  ggtitle("Covid-19 outbreak (logarithmic)") +
   theme_minimal()
 
 # daily growth infected
