@@ -22,7 +22,8 @@ infected <- c(
   166, #"2020-03-17"
   185, #"2020-03-18"
   240, #"2020-03-19"
-  308  #"2020-03-20"
+  308, #"2020-03-20"
+  359  #"2020-03-20"
 )
 
 # prepare data
@@ -141,11 +142,11 @@ p2 <- data %>%
   filter(day >= 5) %>% 
   ggplot(aes(day, new_pct)) +
   geom_col(fill = "grey") +
+  geom_hline(yintercept = 10, color = "darkgrey", alpha = 0.7) +
+  geom_hline(yintercept = 33, color = "darkgrey", alpha = 0.7) +
   geom_text(aes(day, new_pct, 
                 label = paste0(format(new_pct, digits=1))),
             size = 2, vjust = "bottom", nudge_y = 1) +
-  geom_hline(yintercept = 10, color = "darkgrey", alpha = 0.7) +
-  geom_hline(yintercept = 33, color = "darkgrey", alpha = 0.7) +
   xlim(c(1,length(infected)+1)) +
   ylim(c(0,100)) +
   xlab("Days since outbreak") +
