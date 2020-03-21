@@ -134,10 +134,10 @@ p2 <- data %>%
   ggplot(aes(day, new_pct)) +
   geom_col(fill = "grey") +
   geom_text(aes(day, new_pct, 
-                label = paste0(format(new_pct, digits=1),"%")),
-            size = 2) +
-  geom_hline(yintercept = 10, linetype = "dotted") +
-  geom_hline(yintercept = 33, linetype = "dotted") +
+                label = paste0(format(new_pct, digits=1))),
+            size = 2, vjust = "bottom", nudge_y = 1) +
+  geom_hline(yintercept = 10, color = "darkgrey", alpha = 0.75) +
+  geom_hline(yintercept = 33, color = "darkgrey", alpha = 0.75) +
   xlim(c(1,length(infected)+1)) +
   ylim(c(0,100)) +
   xlab("Days since outbreak") +
@@ -149,7 +149,7 @@ p2 <- data %>%
            size = 2,vjust = "bottom") +
   annotate("text", 2.5, 33, 
            label = "33% growth",
-           size = 2,vjust = "bottom") 
+           size = 2, vjust = "bottom") 
 
 
 # combine plots
