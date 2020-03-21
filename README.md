@@ -5,6 +5,8 @@
 Data based on *2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins*
 CSSE (https://github.com/CSSEGISandData/COVID-19)
 
+Confirmed Infections are biased (availability of tests, numer of tests per day, test strategy, reporting strategy). The real number of infections may be much higher than confirmed cases due to unreported cases.
+
 <img src="covid-19-austria-world.png" alt="Covid-19 Austria" width="800">
 
 <img src="covid-19-austria-europe.png" alt="Covid-19 Austria" width="800">
