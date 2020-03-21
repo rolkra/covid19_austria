@@ -144,8 +144,8 @@ p2 <- data %>%
   geom_text(aes(day, new_pct, 
                 label = paste0(format(new_pct, digits=1))),
             size = 2, vjust = "bottom", nudge_y = 1) +
-  geom_hline(yintercept = 10, color = "darkgrey") +
-  geom_hline(yintercept = 33, color = "darkgrey") +
+  geom_hline(yintercept = 10, color = "darkgrey", alpha = 0.7) +
+  geom_hline(yintercept = 33, color = "darkgrey", alpha = 0.7) +
   xlim(c(1,length(infected)+1)) +
   ylim(c(0,100)) +
   xlab("Days since outbreak") +
