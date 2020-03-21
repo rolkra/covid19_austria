@@ -142,7 +142,7 @@ p2 <- data %>%
   ggplot(aes(day, new_pct)) +
   geom_col(fill = "grey") +
   geom_text(aes(day, new_pct, 
-                label = paste0(format(new_pct, digits=1),"%")),
+                label = paste0(format(new_pct, digits=1))),
             size = 2, vjust = "bottom", nudge_y = 1) +
   geom_hline(yintercept = 10, color = "darkgrey") +
   geom_hline(yintercept = 33, color = "darkgrey") +
