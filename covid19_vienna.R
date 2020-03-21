@@ -153,10 +153,10 @@ p2 <- data %>%
   ylab("Daily growth in %") + 
 #  ggtitle("Covid-19 outbreak in Vienna") +
   theme_minimal() +
-  annotate("text", 2.5, 10, 
+  annotate("text", 2.5, 10+1, 
            label = "10% growth",
            size = 2,vjust = "bottom")  +
-  annotate("text", 2.5, 33, 
+  annotate("text", 2.5, 33+1, 
            label = "33% growth",
            size = 2,vjust = "bottom") 
   
