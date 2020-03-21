@@ -134,9 +134,14 @@ data_line_start <- tibble(
 )
 
 # predict 33% growth (days since 50 cases)
-data_line <- predict_corona(
+data_line33 <- predict_corona(
   data_line_start,
   infection_rate = 1.33,
+  days = 30)
+
+data_line10 <- predict_corona(
+  data_line_start,
+  infection_rate = 1.10,
   days = 30)
 
 highlight_country <- "Austria"
@@ -148,7 +153,9 @@ p1 <- ggplot(data = data_countries %>% filter(!country %in% highlight_country),
   geom_line(data = data_countries %>% filter(country %in% highlight_country),
             aes(day,infected, colour = country), 
             alpha = 1, size = 1.5) +
-  geom_line(data = data_line, 
+  geom_line(data = data_line10, 
+            aes(day,infected), color = "grey", alpha = 0.7) +
+  geom_line(data = data_line33, 
             aes(day,infected), color = "grey", alpha = 0.7) +
   #scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
   scale_y_log10(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +

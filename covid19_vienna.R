@@ -107,8 +107,13 @@ data_line_start <- tibble(
   infected = 85
 )
 
-# predict 33% growth (days since 50 cases)
-data_line <- predict_corona(
+# predict 10%/33% growth (days since 50 cases)
+data_line10 <- predict_corona(
+  data_line_start,
+  infection_rate = 1.10,
+  days = 7)
+
+data_line33 <- predict_corona(
   data_line_start,
   infection_rate = 1.33,
   days = 7)
@@ -118,7 +123,9 @@ p1 <- data %>%
   mutate(infected_M = infected / 1000000) %>% 
   ggplot(aes(day, infected)) + 
   geom_line(size = 1.5, color = "red") +
-  geom_line(data = data_line, 
+  geom_line(data = data_line10, 
+            aes(day,infected), color = "grey", alpha = 0.7) +
+  geom_line(data = data_line33, 
             aes(day,infected), color = "grey", alpha = 0.7) +
   xlim(c(1,length(infected)+1)) +
   ylim(0,max(infected)) +
@@ -137,6 +144,7 @@ p2 <- data %>%
   geom_text(aes(day, new_pct, 
                 label = paste0(format(new_pct, digits=1),"%")),
             size = 2) +
+  geom_hline(yintercept = 10, linetype = "dotted") +
   geom_hline(yintercept = 33, linetype = "dotted") +
   xlim(c(1,length(infected)+1)) +
   ylim(c(0,100)) +
@@ -144,11 +152,13 @@ p2 <- data %>%
   ylab("Daily growth in %") + 
 #  ggtitle("Covid-19 outbreak in Vienna") +
   theme_minimal() +
+  annotate("text", 2.5, 10, 
+           label = "10% growth",
+           size = 2,vjust = "bottom")  +
   annotate("text", 2.5, 33, 
            label = "33% growth",
-           size = 2,
-           vjust = "bottom"
-  ) 
+           size = 2,vjust = "bottom") 
+  
 
 # combine plots
 p <- ((p1 / p2) | p0) + plot_annotation('Covid-19 outbreak in Vienna',
