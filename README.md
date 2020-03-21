@@ -50,5 +50,6 @@ install.packages(c("tidyverse", "lubridate", "scales")
 * https://orf.at/corona/daten
 * https://de.wikipedia.org/wiki/COVID-19-Pandemie_in_%C3%96sterreich
 * https://medium.com/@tomaspueyo/coronavirus-the-hammer-and-the-dance-be9337092b56
+* https://medium.com/tomas-pueyo/coronavirus-der-hammer-und-der-tanz-abf9015cb2af
 * https://towardsdatascience.com/top-5-r-resources-on-covid-19-coronavirus-1d4c8df6d85f
 
