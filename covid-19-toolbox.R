@@ -28,26 +28,20 @@ covid19_read_infected <- function(raw = FALSE, countries = NA)  {
     mutate(date = substr(date,2,8)) %>% 
     mutate(date = mdy(date))
   
-  # recode China/Hubei, US
+  # convert factors to character
   data <- data %>% 
     mutate(Country.Region = as.character(Country.Region)) %>% 
-    mutate(Province.State = as.character(Province.State)) %>% 
-    mutate(Country.Region = ifelse(Country.Region == "China" & Province.State == "Hubei", "China/Hubei", Country.Region)) %>% 
-    mutate(Province.State = ifelse(Country.Region == "China/Hubei", "China/Hubei", Province.State)) %>% 
-    mutate(Country.Region = ifelse(Country.Region == "US" & Province.State == "New York", "US/New York", Country.Region)) %>% 
-    mutate(Province.State = ifelse(Country.Region == "US/New York", "US/New York", Province.State))
-  
-  # filter countries  
-  if (!is.na(countries))  {
-    data <- data %>% 
-      filter(Country.Region %in% countries,
-             (Province.State =="" | Province.State %in% countries),
-             value > 0)
-  } #if
+    mutate(Province.State = as.character(Province.State))
+    # mutate(Country.Region = ifelse(Country.Region == "China" & Province.State == "Hubei", "China/Hubei", Country.Region)) %>% 
+    # mutate(Province.State = ifelse(Country.Region == "China/Hubei", "China/Hubei", Province.State)) %>% 
+    # mutate(Country.Region = ifelse(Country.Region == "US" & Province.State == "New York", "US/New York", Country.Region)) %>% 
+    # mutate(Province.State = ifelse(Country.Region == "US/New York", "US/New York", Province.State))
   
   # add country and type
   data <- data %>% 
-    mutate(country = Country.Region, 
+    mutate(country = ifelse((Province.State == "" | Country.Region == Province.State), 
+                            Country.Region, 
+                            paste0(Country.Region,"/",Province.State)), 
            type = "confirmed") 
 
   # add day, infected
@@ -64,6 +58,13 @@ covid19_read_infected <- function(raw = FALSE, countries = NA)  {
            new_pct = new_abs / lag(infected) * 100) %>% 
     ungroup()
 
+  # filter countries  
+  if (!is.na(countries))  {
+    data <- data %>% 
+      filter(country %in% countries) %>% 
+      filter(value > 0)
+  } #if
+  
   # return data
   data
     
