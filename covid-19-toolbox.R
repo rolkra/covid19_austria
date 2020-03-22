@@ -28,12 +28,14 @@ covid19_read_infected <- function(raw = FALSE, countries = NA)  {
     mutate(date = substr(date,2,8)) %>% 
     mutate(date = mdy(date))
   
-  # recode China/Hubei
+  # recode China/Hubei, US
   data <- data %>% 
     mutate(Country.Region = as.character(Country.Region)) %>% 
     mutate(Province.State = as.character(Province.State)) %>% 
     mutate(Country.Region = ifelse(Country.Region == "China" & Province.State == "Hubei", "China/Hubei", Country.Region)) %>% 
-    mutate(Province.State = ifelse(Country.Region == "China/Hubei", "China/Hubei", Province.State))
+    mutate(Province.State = ifelse(Country.Region == "China/Hubei", "China/Hubei", Province.State)) %>% 
+    mutate(Country.Region = ifelse(Country.Region == "US" & Province.State == "New York", "US/New York", Country.Region)) %>% 
+    mutate(Province.State = ifelse(Country.Region == "US/New York", "US/New York", Province.State))
   
   # filter countries  
   if (!is.na(countries))  {
@@ -97,11 +99,16 @@ covid19_predict_infections <- function(data, country = NA, infection_rate = 1.33
 ## plot infected
 #################################################
 
-covid19_plot_infected <- function(data, countries = "Austria", highlight_country = "Austria", log = FALSE, min_infected = 50, title = NA) {
+covid19_plot_infected <- function(data, countries = "Austria", highlight_country = NA, log = FALSE, min_infected = 50, title = NA) {
 
   # filter countries
   data <- data %>% filter(country %in% countries)
 
+  # default value for highlight_country
+  if (is.na(highlight_country))  {
+    highlight_country <- countries[1]
+  }
+  
   # overwrite day
   data <- data %>% 
     filter(infected >= min_infected) %>% 
@@ -224,28 +231,30 @@ covid19_plot_daily_growth <- function(data, country = "Austria", min_infected = 
     ggplot(aes(day, new_pct)) +
     geom_col(fill = "grey") 
   
+  p <- p +
+    geom_hline(yintercept = 33, color = "darkgrey", alpha = 0.7) +
+    geom_hline(yintercept = 10, color = "darkgrey", alpha = 0.7)
+    
   if (nrow(data) <= 30) {
     p <- p + 
       geom_text(aes(day, new_pct, label = 
                       paste0(format(new_pct, digits=0))),
                 size = 2, 
                 vjust = "bottom", nudge_y = 1)
-      
+    
   } #if
-
+  
   p <- p +
-    geom_hline(yintercept = 33, linetype = "dotted") +
-    geom_hline(yintercept = 10, linetype = "dotted") +
     #ylim(c(0,75)) +
-    xlab(paste("Days since outbreak")) +
+    xlab(paste("Days")) +
     ylab("Daily growth in %") + 
     #  ggtitle("Covid-19 outbreak in Vienna") +
     theme_minimal() +
-    annotate("text", 1, 33, 
+    annotate("text", min(data$day), 33+1, 
              label = "33% growth",
              size = 2, 
              vjust = "bottom", hjust = "left") +
-    annotate("text", 1, 10, 
+    annotate("text", min(data$day), 10+1, 
              label = "10% growth",
              size = 2, 
              vjust = "bottom", hjust = "left")
