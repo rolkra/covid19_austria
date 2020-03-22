@@ -46,7 +46,7 @@ covid19_read_infected <- function(raw = FALSE, countries = NA)  {
   # add country and type
   data <- data %>% 
     mutate(country = Country.Region, 
-           type = "reported") 
+           type = "confirmed") 
 
   # add day, infected
   data <- data %>% 
