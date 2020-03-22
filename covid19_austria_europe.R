@@ -168,7 +168,7 @@ p2 <- data_countries %>%
   ylim(c(0,100)) +
   xlab("Days since 50 cases") +
   ylab("Daily growth in %") + 
-  #  ggtitle("Covid-19 outbreak in Vienna") +
+  #  ggtitle("Covid-19 outbreak in Austria") +
   theme_minimal() +
   annotate("text", 2.5, 33, 
            label = "33% growth",
