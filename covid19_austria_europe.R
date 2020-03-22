@@ -22,7 +22,7 @@ work <- work %>%
          (Province.State =="" | Province.State %in% countries),
          value > 0) %>% 
   mutate(country = Country.Region,
-         type = "reported") 
+         type = "confirmed") 
 
 # days
 data <- work %>% 
@@ -87,7 +87,7 @@ data_10 <- predict_data %>%
 
 # combine dataset
 data_plot <- predict_data %>% 
-  bind_rows(data_50, data_40, data_33, data_20, data_15, data_10)
+  bind_rows(data_40, data_33, data_20, data_15, data_10)
 
 # visualise
 last_day <- nrow(predict_data)

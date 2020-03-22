@@ -30,7 +30,7 @@ infected <- c(
 data <- tibble(infected = infected)
 
 data <- data %>% 
-  mutate(type = "reported",
+  mutate(type = "confirmed",
          day = row_number()) %>% 
   arrange(day) %>% 
   mutate(new_abs = infected - lag(infected),
