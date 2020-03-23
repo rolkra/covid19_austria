@@ -361,12 +361,17 @@ covid19_plot_deaths <- function(data, top_n = 10, title = NULL)  {
   p <- top_deaths %>% 
     top_n(top_n) %>% 
     mutate(country = factor(country)) %>% 
-    ggplot(aes(reorder(country, deaths), deaths)) +
+    ggplot(aes(reorder(country, deaths), deaths, label = deaths)) +
     geom_col(fill = "grey") + 
-    scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
+    geom_text(aes(label = format(deaths, big.mark=" ")), 
+              hjust = 0, nudge_y = 1, size = 2.5) +
+    ylim(0, max(top_deaths$deaths)*1.2) +
+    scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE),
+                       limits=c(0, max(top_deaths$deaths)*1.2)) +
     xlab("") +
     theme_light() +
     coord_flip()
+  p
   
   # overrule title?
   if (!missing(title)) {
