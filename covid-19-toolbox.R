@@ -248,7 +248,7 @@ covid19_plot_szenarios <- function(data, country = "Austria", predict_days = 50,
                linetype = "dotted") +
     ylim(0, max_mio) +
     xlab("Days since outbreak") +
-    ylab("Confirmed infections in Mio") + 
+    ylab("Infections in Mio") + 
     #ggtitle("Covid-19 outbreak in Austria") +
     theme_minimal()+
     annotate("text", last_day/2, max_mio*0.9, 
@@ -392,4 +392,32 @@ covid19_save_plot <- function(plot, filename)  {
   plot %>% ggsave(filename = filename, 
                 device = "png",
                 width = 7, height = 4)
+} #function
+
+#################################################
+## overview
+#################################################
+
+covid19_plot_overview <- function(data, country = "Austria", log = FALSE, title = NULL)  {
+    
+  p1 <- data %>% 
+    covid19_plot_confirmed(countries = country, 
+                           log = log,
+                           title = NULL)
+  
+  p2 <- data %>% 
+    covid19_plot_daily_growth(country = country,
+                              title = NULL)
+  
+  p3 <- data %>% 
+    covid19_plot_szenarios(country = country,
+                           title = NULL)
+  
+  if (!missing(title)) {
+    ((p1 / p2) | p3) + plot_annotation(title,
+                                       caption = "source: https://github.com/CSSEGISandData/COVID-19")
+  } else {    
+    ((p1 / p2) | p3) + plot_annotation(paste('Covid-19 outbreak in', country),
+                                       caption = "source: https://github.com/CSSEGISandData/COVID-19")
+  } #if
 } #function
