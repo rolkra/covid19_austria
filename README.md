@@ -20,11 +20,13 @@ Confirmed Infections are biased (availability of tests, numer of tests per day, 
 You can use this toolbox to explore Covid-19 with R-Code:
 
 ```R
+# use toolbox
 source("covid-19-toolbox.R")
 
-data <- covid19_read_infected()
+# confirmed
+confirmed <- covid19_read_confirmed()
 
-data %>% 
+confirmed %>% 
   covid19_plot_infected(
     countries = c("Austria","Italy","China/Hubei"),
     highlight_country = "Austria",
@@ -32,12 +34,17 @@ data %>%
     min_infected = 100
   )
 
-data %>% 
+confirmed %>% 
   covid19_plot_szenarios(country = "Spain")
   
-data %>% 
+confirmed %>% 
   covid19_plot_daily_growth(country = "Austria")
 
+# deaths
+deaths <- covid19_read_deaths()
+
+deaths %>% 
+  covid19_plot_deaths()
 ```
 
 You may need to install the following R-packages:
