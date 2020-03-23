@@ -7,7 +7,8 @@ deaths <- covid19_read_deaths()
 
 # deaths
 p <- deaths %>% 
-  covid19_plot_deaths(title = "Covid-19 outbreak - deaths")
+  covid19_plot_deaths(top_n = 20,
+                      title = "Covid-19 outbreak - deaths")
 
 p %>% covid19_save_plot("covid-19-deaths.png")
 
