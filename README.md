@@ -64,6 +64,7 @@ Data / Visualisation:
 
 Background:
 * https://de.wikipedia.org/wiki/COVID-19-Pandemie_in_%C3%96sterreich
+* https://de.wikipedia.org/wiki/COVID-19
 
 Szenarios:
 * https://medium.com/@tomaspueyo/coronavirus-the-hammer-and-the-dance-be9337092b56
