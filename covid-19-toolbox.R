@@ -364,7 +364,7 @@ covid19_plot_deaths <- function(data, top_n = 10, title = NULL)  {
     ggplot(aes(reorder(country, deaths), deaths, label = deaths)) +
     geom_col(fill = "grey") + 
     geom_text(aes(label = format(deaths, big.mark=" ")), 
-              hjust = 0, nudge_y = 1, size = 2.5) +
+              hjust = 0, nudge_y = max(top_deaths$deaths)/100, size = 2.5) +
     ylim(0, max(top_deaths$deaths)*1.2) +
     scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE),
                        limits=c(0, max(top_deaths$deaths)*1.2)) +

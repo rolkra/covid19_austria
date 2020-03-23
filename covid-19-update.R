@@ -13,10 +13,13 @@ p <- deaths %>%
 p %>% covid19_save_plot("covid-19-deaths.png")
 
 # world
-countries <- c("Austria","Italy","Spain","China/Hubei", "Korea, South", "Japan","Taiwan*","Iran")
+source("covid19_austria_world.R")
 
-p <- confirmed %>% 
-  covid19_plot_confirmed(countries, log = TRUE)
+# europe
+source("covid19_austria_europe.R")
 
-p
- 
+# austria
+source("covid19_austria.R")
+
+# austria/vienna (update confirmed manually!)
+source("covid19_vienna.R")
