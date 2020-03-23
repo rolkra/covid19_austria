@@ -27,11 +27,11 @@ source("covid-19-toolbox.R")
 confirmed <- covid19_read_confirmed()
 
 confirmed %>% 
-  covid19_plot_infected(
+  covid19_plot_confirmed(
     countries = c("Austria","Italy","China/Hubei"),
     highlight_country = "Austria",
     log = FALSE,
-    min_infected = 100
+    min_confirmed = 100
   )
 
 confirmed %>% 
