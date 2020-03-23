@@ -57,10 +57,18 @@ install.packages(c("tidyverse", "lubridate", "scales")
 
 # Additional Covid-19 Links
 
-* https://coronavirus.jhu.edu/map.html
-* https://orf.at/corona/daten
+Data / Visualisation: 
+* https://coronavirus.jhu.edu/map.html (World)
+* https://ncov2019.live/data (World / US)
+* https://orf.at/corona/daten (Austria)
+
+Background:
 * https://de.wikipedia.org/wiki/COVID-19-Pandemie_in_%C3%96sterreich
+
+Szenarios:
 * https://medium.com/@tomaspueyo/coronavirus-the-hammer-and-the-dance-be9337092b56
 * https://medium.com/tomas-pueyo/coronavirus-der-hammer-und-der-tanz-abf9015cb2af
+
+R Code:
 * https://towardsdatascience.com/top-5-r-resources-on-covid-19-coronavirus-1d4c8df6d85f
 
