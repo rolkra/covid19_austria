@@ -377,3 +377,14 @@ covid19_plot_deaths <- function(data, top_n = 10, title = NULL)  {
   p
   
 } #function  
+
+#################################################
+## save plot
+#################################################
+
+covid19_save_plot <- function(plot, filename)  {
+  
+  plot %>% ggsave(filename = filename, 
+                device = "png",
+                width = 7, height = 4)
+} #function
