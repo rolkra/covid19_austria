@@ -362,7 +362,7 @@ covid19_plot_deaths <- function(data, top_n = 10, title = NULL)  {
     top_n(top_n) %>% 
     mutate(country = factor(country)) %>% 
     ggplot(aes(reorder(country, deaths), deaths)) +
-    geom_col(fill = "red") + 
+    geom_col(fill = "grey") + 
     scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
     xlab("") +
     theme_light() +
