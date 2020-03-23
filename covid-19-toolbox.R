@@ -160,7 +160,7 @@ covid19_predict_infections <- function(data, country = NA, infection_rate = 1.33
 ## plot infected
 #################################################
 
-covid19_plot_infected <- function(data, countries = "Austria", highlight_country = NA, log = FALSE, min_infected = 50, title = NA) {
+covid19_plot_confirmed <- function(data, countries = "Austria", highlight_country = NA, log = FALSE, min_confirmed = 50, title = NA) {
 
   # filter countries
   data <- data %>% filter(country %in% countries)
@@ -172,7 +172,7 @@ covid19_plot_infected <- function(data, countries = "Austria", highlight_country
   
   # overwrite day
   data <- data %>% 
-    filter(infected >= min_infected) %>% 
+    filter(infected >= min_confirmed) %>% 
     arrange(country, day) %>% 
     group_by(country) %>% 
     mutate(day = row_number()) %>% 
@@ -188,7 +188,7 @@ covid19_plot_infected <- function(data, countries = "Austria", highlight_country
               alpha = 1, size = 1.5) +
     #geom_line(data = data_line, 
     #          aes(day,infected), color = "grey", alpha = 0.7) +
-    labs(x = paste("Days since", min_infected, "cases"), 
+    labs(x = paste("Days since", min_confirmed, "cases"), 
          y = "Confirmed infections") +
     theme_minimal()
 
