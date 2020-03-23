@@ -5,7 +5,7 @@
 Data based on *2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins*
 CSSE (https://github.com/CSSEGISandData/COVID-19)
 
-Confirmed Infections are biased (availability of tests, numer of tests per day, test strategy, reporting strategy). The real number of infections may be much higher than confirmed cases due to unreported cases. Furthermore there may be signifikant differences in social behavior (bowing, handshaking, kissing), family structure, timing of social distancing, complience of people etc.
+Confirmed Infections are biased (availability of tests, numer of tests per day, test strategy, reporting strategy). The real number of infections may be much higher than confirmed cases due to unreported cases. Furthermore there are signifikant differences between countries regarding social behavior (bowing, handshaking, kissing), family structure, timing of social distancing, complience of people etc.
 
 <img src="covid-19-austria-world.png" alt="Covid-19 Austria" width="800">
 
