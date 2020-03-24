@@ -1,3 +1,7 @@
+##########################################################
+## update <ctr> <shift> s (source)
+##########################################################
+
 # use toolbox
 source("covid-19-toolbox.R")
 
@@ -6,6 +10,7 @@ confirmed <- covid19_read_confirmed()
 deaths <- covid19_read_deaths()
 
 # deaths
+cat("generate plot deaths...\n")
 p <- deaths %>% 
   covid19_plot_deaths(top_n = 20,
                       title = "Covid-19 outbreak - deaths")
@@ -13,13 +18,20 @@ p <- deaths %>%
 p %>% covid19_save_plot("covid-19-deaths.png")
 
 # world
-source("covid19_austria_world.R")
+cat("generate plot world...\n")
+suppressWarnings(source("covid19_austria_world.R"))
 
 # europe
-source("covid19_austria_europe.R")
+cat("generate plot europe...\n")
+suppressWarnings(source("covid19_austria_europe.R"))
 
 # austria
-source("covid19_austria.R")
+cat("generate plot austria...\n")
+suppressWarnings(source("covid19_austria.R"))
 
 # austria/vienna (update confirmed manually!)
-source("covid19_vienna.R")
+cat("generate plot vienna...\n")
+suppressWarnings(source("covid19_vienna.R"))
+
+# done
+cat("done!\n")
