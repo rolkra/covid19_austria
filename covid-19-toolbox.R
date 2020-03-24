@@ -365,9 +365,9 @@ covid19_plot_deaths <- function(data, top_n = 10, title = NULL)  {
     geom_col(fill = "grey") + 
     geom_text(aes(label = format(deaths, big.mark=" ")), 
               hjust = 0, nudge_y = max(top_deaths$deaths, na.rm = TRUE)/200, size = 2.5) +
-    ylim(0, max(top_deaths$deaths)*1.2) +
+    #ylim(0, max(top_deaths$deaths)*1.2) +
     scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE),
-                       limits=c(0, max(top_deaths$deaths)*1.2)) +
+                       limits=c(0, max(top_deaths$deaths, na.rm = TRUE)*1.2)) +
     xlab("") +
     theme_light() +
     coord_flip()
