@@ -75,4 +75,6 @@ Szenarios:
 
 R Code:
 * https://towardsdatascience.com/top-5-r-resources-on-covid-19-coronavirus-1d4c8df6d85f
-
+* https://staff.math.su.se/hoehle/blog/2020/03/16/flatteningthecurve.html
+* https://rviews.rstudio.com/2020/03/19/simulating-covid-19-interventions-with-r/
+* https://cran.r-project.org/web/packages/coronavirus/index.html
