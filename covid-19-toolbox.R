@@ -342,7 +342,7 @@ covid19_show_deaths <- function(data, top_n = 10)  {
   # countries by deaths
   data %>% 
     group_by(country) %>% 
-    summarise(deaths = max(deaths)) %>% 
+    summarise(deaths = max(deaths, na.rm = TRUE)) %>% 
     arrange(-deaths)
 
 } #function  
