@@ -3,9 +3,10 @@
 ##########################################################
 
 # use toolbox
-source("covid-19-toolbox.R")
+suppressWarnings(source("covid-19-toolbox.R"))
 
 # read data
+cat("read data...\n")
 confirmed <- covid19_read_confirmed()
 deaths <- covid19_read_deaths()
 
