@@ -120,8 +120,9 @@ p1 <- data %>%
   geom_line(data = data_line33, 
             aes(day,infected), color = "grey", alpha = 0.7) +
   xlim(c(1,length(infected)+1)) +
-  ylim(0,max(infected)) +
-  scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
+  #ylim(0,max(infected)) +
+  scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE),
+                     limits=c(0,max(infected)) ) +
   #  xlab("Days since outbreak") +
   xlab("") +
   ylab("Confirmed infections") + 
