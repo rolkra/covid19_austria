@@ -12,7 +12,7 @@ library(scales)
 ## read file
 #################################################
 
-covid19_read_file <- function(file = NA, raw = FALSE, countries = NA)  {
+covid19_read_file <- function(file = NA, type, raw = FALSE, countries = NA)  {
 
   
   # read data (https://github.com/CSSEGISandData/COVID-19)
@@ -39,7 +39,7 @@ covid19_read_file <- function(file = NA, raw = FALSE, countries = NA)  {
     mutate(country = ifelse((Province.State == "" | Country.Region == Province.State), 
                             Country.Region, 
                             paste0(Country.Region,"/",Province.State)), 
-           type = "confirmed") 
+           type = type) 
 
   # add day, infected
   data <- data %>% 
@@ -76,7 +76,7 @@ covid19_read_confirmed <- function(raw = FALSE, countries = NA)  {
   file <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
   
   # read data (https://github.com/CSSEGISandData/COVID-19)
-  data <- covid19_read_file(file, raw = raw, countries = countries)
+  data <- covid19_read_file(file, type = "confirmed", raw = raw, countries = countries)
 
   # create new variable
   data <- data %>% 
@@ -98,7 +98,7 @@ covid19_read_recovered <- function(raw = FALSE, countries = NA)  {
   file <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv"
   
   # read data (https://github.com/CSSEGISandData/COVID-19)
-  data <- covid19_read_file(file, raw = raw, countries = countries)
+  data <- covid19_read_file(file, type = "recovered", raw = raw, countries = countries)
   
   # create new variable
   data <- data %>% 
@@ -119,7 +119,7 @@ covid19_read_deaths <- function(raw = FALSE, countries = NA)  {
   file <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
   
   # read data (https://github.com/CSSEGISandData/COVID-19)
-  data <- covid19_read_file(file, raw = raw, countries = countries)
+  data <- covid19_read_file(file, type = "deaths", raw = raw, countries = countries)
   
   # create new variable
   data <- data %>% 
@@ -127,6 +127,40 @@ covid19_read_deaths <- function(raw = FALSE, countries = NA)  {
   
   # output
   data
+  
+} #function
+
+#################################################
+## combine data
+#################################################
+
+covid19_combine_data <- function(confirmed, deaths, recovered) {
+  
+  # confirmed
+  d1 <- confirmed %>% 
+    select(country, date, day, type, value)
+  
+  # deaths
+  d2 <- deaths %>% 
+    select(country, date, day, type, value)
+  
+  # recovered
+  d3 <- recovered %>% 
+    select(country, date, day, type, value)
+  
+  # combine
+  d <- d1 %>% 
+    bind_rows(d2) %>% 
+    bind_rows(d3) %>% 
+    pivot_wider(names_from = type, values_from = value)
+  
+  # calculations
+  d <- d %>% 
+    mutate(deaths_pct = ifelse(confirmed > 0, deaths/confirmed*100, 0)) %>% 
+    mutate(recovered_pct = ifelse(confirmed > 0, recovered/confirmed*100, 0))
+  
+  # return
+  d
   
 } #function
 
@@ -420,4 +454,26 @@ covid19_plot_overview <- function(data, country = "Austria", log = FALSE, title 
     ((p1 / p2) | p3) + plot_annotation(paste('Covid-19 outbreak in', country),
                                        caption = "source: https://github.com/CSSEGISandData/COVID-19")
   } #if
+} #function
+
+
+#################################################
+## show death rate
+#################################################
+
+covid19_show_death_rate <- function(data, countries, min_confirmed = 100)  {
+
+  if(!missing(countries))  {
+    data <- data %>% 
+      filter(country %in% countries)
+  }
+  
+  data %>% 
+    filter(confirmed >= min_confirmed) %>% 
+    arrange(country, -day) %>% 
+    group_by(country) %>% 
+    top_n(1, day) %>% 
+    select(country, deaths_pct, confirmed, deaths) %>% 
+    arrange(-deaths_pct)
+  
 } #function
