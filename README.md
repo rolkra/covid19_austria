@@ -50,6 +50,15 @@ deaths <- covid19_read_deaths()
 
 deaths %>% 
   covid19_plot_deaths()
+  
+# combine confirmed + deaths + recovered
+confirmed <- covid19_read_confirmed()
+deaths <- covid19_read_deaths()
+recovered <- covid19_read_recovered()
+
+data <- covid19_combine_data(confirmed, deaths, recovered)
+
+data %>% covid19_show_death_rate()
 ```
 
 You may need to install the following R-packages:
