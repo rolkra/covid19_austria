@@ -359,7 +359,7 @@ covid19_plot_deaths <- function(data, top_n = 10, title = NULL)  {
 
   # plot  
   p <- top_deaths %>% 
-    top_n(top_n) %>% 
+    top_n(top_n, deaths) %>% 
     mutate(country = factor(country)) %>% 
     ggplot(aes(reorder(country, deaths), deaths, label = deaths)) +
     geom_col(fill = "grey") + 
