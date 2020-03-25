@@ -434,15 +434,31 @@ covid19_save_plot <- function(plot, filename)  {
 #################################################
 
 covid19_plot_overview <- function(data, country = "Austria", log = FALSE, title = NULL)  {
-    
+  
+  # check if country in data  
+  rows <- data %>% 
+    filter(country == .env$country) %>% 
+    nrow()
+  
+  if(rows == 0)  {
+    return(paste0("no data found for country '", country,"'\n"))
+  }
+  
   p1 <- data %>% 
     covid19_plot_confirmed(countries = country, 
                            log = log,
                            title = NULL)
   
-  p2 <- data %>% 
+  p2 <- data %>%
+    filter(.data$country == .env$country,
+           confirmed >= 50) %>% 
+    arrange(country,date) %>% 
+    group_by(country) %>% 
+    mutate(day = row_number()) %>% 
+    ungroup() %>% 
     covid19_plot_daily_growth(country = country,
-                              title = NULL)
+                              title = NULL) +
+    xlab("Days since 50 cases")
   
   p3 <- data %>% 
     covid19_plot_szenarios(country = country,
