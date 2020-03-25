@@ -5,7 +5,7 @@ library(lubridate)
 library(scales)
 
 # read data (https://github.com/CSSEGISandData/COVID-19)
-raw <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv")
+raw <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
 
 work <- raw %>% 
   pivot_longer(cols = starts_with("X"),
