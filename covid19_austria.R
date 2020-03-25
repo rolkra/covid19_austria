@@ -103,12 +103,12 @@ data_line_start <- tibble(
 data_line10 <- predict_corona(
   data_line_start,
   infection_rate = 1.10,
-  days = 5)
+  days = 9)
 
 data_line33 <- predict_corona(
   data_line_start,
   infection_rate = 1.33,
-  days = 5)
+  days = 9)
 
 # infected
 p1 <- data %>% 
