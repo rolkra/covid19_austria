@@ -117,7 +117,7 @@ covid19_read_recovered <- function(raw = FALSE, countries = NA)  {
 covid19_read_deaths <- function(raw = FALSE, countries = NA)  {
   
   # define file
-  file <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
+  file <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
   
   # read data (https://github.com/CSSEGISandData/COVID-19)
   data <- covid19_read_file(file, type = "deaths", raw = raw, countries = countries)
