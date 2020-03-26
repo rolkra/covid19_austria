@@ -447,7 +447,8 @@ covid19_plot_overview <- function(data, country = "Austria", log = FALSE, title 
   p1 <- data %>% 
     covid19_plot_confirmed(countries = country, 
                            log = log,
-                           title = NULL)
+                           title = NULL) +
+    theme(legend.position = "none")
   
   p2 <- data %>%
     filter(.data$country == .env$country,
