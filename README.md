@@ -43,7 +43,7 @@ confirmed %>%
   covid19_plot_daily_growth(country = "Austria")
 
 confirmed %>% 
-  covid19_plot_overview("US/New York")
+  covid19_plot_overview("US")
 
 # deaths
 deaths <- covid19_read_deaths()
