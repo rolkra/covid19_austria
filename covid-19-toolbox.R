@@ -96,7 +96,7 @@ covid19_read_confirmed <- function(raw = FALSE, countries = NA)  {
 covid19_read_recovered <- function(raw = FALSE, countries = NA)  {
   
   # define file
-  file <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv"
+  file <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
   
   # read data (https://github.com/CSSEGISandData/COVID-19)
   data <- covid19_read_file(file, type = "recovered", raw = raw, countries = countries)
