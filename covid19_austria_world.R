@@ -21,7 +21,7 @@ work <- work %>%
   mutate(Province.State = ifelse(Country.Region == "China/Hubei", "China/Hubei", Province.State))
 
 # define countries
-countries <- c("Austria","Italy","Spain","China/Hubei", "Korea, South", "Japan","Taiwan*","Iran")
+countries <- c("Austria","Italy","Spain","China/Hubei", "Korea, South", "Japan","Iran","US")
 
 # filter countries
 work <- work %>% 
