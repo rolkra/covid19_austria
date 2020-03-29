@@ -103,12 +103,12 @@ data_line_start <- tibble(
 data_line10 <- predict_corona(
   data_line_start,
   infection_rate = 1.10,
-  days = 9)
+  days = 15)
 
 data_line33 <- predict_corona(
   data_line_start,
   infection_rate = 1.33,
-  days = 9)
+  days = 15)
 
 # infected
 p1 <- data %>% 
@@ -140,15 +140,15 @@ p2 <- data %>%
   geom_hline(yintercept = 10, color = "darkgrey", alpha = 0.75) +
   geom_hline(yintercept = 33, color = "darkgrey", alpha = 0.75) +
   xlim(c(1,length(infected)+1)) +
-  ylim(c(0,100)) +
+  ylim(c(0,75)) +
   xlab("Days since outbreak") +
   ylab("Daily growth in %") + 
   #  ggtitle("Covid-19 outbreak in Vienna") +
   theme_minimal() +
-  annotate("text", 2.5, 10+1, 
+  annotate("text", 3, 10+1, 
            label = "10% growth",
            size = 2,vjust = "bottom") +
-  annotate("text", 2.5, 33+1, 
+  annotate("text", 3, 33+1, 
            label = "33% growth",
            size = 2, vjust = "bottom") 
 

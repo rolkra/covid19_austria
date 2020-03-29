@@ -30,7 +30,8 @@ infected <- c(
   666, #"2020-03-25"
   776, #"2020-03-26"
   933, #"2020-03-27"
- 1059  #"2020-03-28"
+ 1059, #"2020-03-28"
+ 1107
 )
 
 # prepare data
@@ -119,12 +120,12 @@ data_line_start <- tibble(
 data_line10 <- predict_corona(
   data_line_start,
   infection_rate = 1.10,
-  days = 7)
+  days = 15)
 
 data_line33 <- predict_corona(
   data_line_start,
   infection_rate = 1.33,
-  days = 7)
+  days = 15)
 
 # infected
 p1 <- data %>% 
@@ -156,7 +157,7 @@ p2 <- data %>%
                 label = paste0(format(new_pct, digits=1))),
             size = 2, vjust = "bottom", nudge_y = 1) +
   xlim(c(1,length(infected)+1)) +
-  ylim(c(0,100)) +
+  ylim(c(0,75)) +
   xlab("Days since outbreak") +
   ylab("Daily growth in %") + 
 #  ggtitle("Covid-19 outbreak in Vienna") +
