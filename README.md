@@ -73,6 +73,7 @@ Data / Visualisation:
 * https://coronavirus.jhu.edu/map.html (World)
 * https://ncov2019.live/data (World / US)
 * https://orf.at/corona/daten (Austria)
+* https://www.addendum.org/coronavirus/oesterreich-verbreitung/ (Austria)
 
 Background:
 * https://de.wikipedia.org/wiki/COVID-19-Pandemie_in_%C3%96sterreich
