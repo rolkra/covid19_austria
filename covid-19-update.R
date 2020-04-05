@@ -13,8 +13,8 @@ deaths <- covid19_read_deaths()
 # deaths
 cat("generate plot deaths...\n")
 p1 <- deaths %>% 
-  covid19_plot_deaths(top_n = 20,
-                      title = "Covid-19 outbreak - deaths")
+  covid19_plot_deaths_ranking(top_n = 20,
+                              title = "Covid-19  - deaths")
 
 p2 <- deaths %>% 
   covid19_plot_deaths(countries = c("Austria","Germany","Italy","US","United Kingdom"), 

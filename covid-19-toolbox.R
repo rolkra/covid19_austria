@@ -428,7 +428,7 @@ covid19_plot_daily_growth <- function(data, country = "Austria", min_infected = 
 ## show deaths
 #################################################
 
-covid19_show_deaths <- function(data, top_n = 10)  {
+covid19_show_deaths_ranking <- function(data, top_n = 10)  {
   
   # countries by deaths
   data %>% 
@@ -442,7 +442,7 @@ covid19_show_deaths <- function(data, top_n = 10)  {
 ## plot deaths
 #################################################
 
-covid19_plot_deaths <- function(data, top_n = 10, title = NULL)  {
+covid19_plot_deaths_ranking <- function(data, top_n = 10, title = NULL)  {
   
   # countries by deaths
     top_deaths <- data %>% 
