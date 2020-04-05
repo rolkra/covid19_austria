@@ -12,9 +12,17 @@ deaths <- covid19_read_deaths()
 
 # deaths
 cat("generate plot deaths...\n")
-p <- deaths %>% 
+p1 <- deaths %>% 
   covid19_plot_deaths(top_n = 20,
                       title = "Covid-19 outbreak - deaths")
+
+p2 <- deaths %>% 
+  covid19_plot_deaths(countries = c("Austria","Germany","Italy","US","United Kingdom"), 
+                      min_deaths = 50, log = TRUE,
+                      title = "Covid-19 - deaths (logarithmic)")
+
+
+p <- (p1 | p2)
 
 p %>% covid19_save_plot("covid-19-deaths.png")
 
