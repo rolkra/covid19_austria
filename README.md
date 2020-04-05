@@ -49,8 +49,11 @@ confirmed %>%
 deaths <- covid19_read_deaths()
 
 deaths %>% 
-  covid19_plot_deaths()
-  
+  covid19_plot_deaths_ranking()
+
+deaths %>% 
+  covid19_plot_deaths(countries = c("Austria","Germany"))
+
 # combine confirmed + deaths + recovered
 confirmed <- covid19_read_confirmed()
 deaths <- covid19_read_deaths()
