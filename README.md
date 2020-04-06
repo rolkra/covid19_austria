@@ -62,8 +62,7 @@ deaths <- covid19_read_deaths()
 recovered <- covid19_read_recovered()
 
 data <- covid19_combine_data(confirmed, deaths, recovered)
-
-data %>% covid19_show_death_rate()
+data %>% covid19_plot_infected("Austria")
 ```
 
 You may need to install the following R-packages:
