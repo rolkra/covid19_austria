@@ -569,12 +569,13 @@ covid19_plot_infected <- function(data, country = "Austria", title = NA) {
     mutate(day = row_number()) %>%
     ungroup() %>% 
     select(country, date, day, infected, deaths, recovered) %>% 
-    pivot_longer(cols = c(infected, deaths, recovered), names_to = "type")  
+    pivot_longer(cols = c(infected, deaths, recovered), names_to = "type")  %>% 
+    mutate(type = factor(type, levels = c("deaths","recovered","infected"), ordered = TRUE))
   
   p <- data_plot %>% 
     ggplot(aes(x = day, y = value, fill = type)) +
     geom_area() +
-    scale_fill_manual(values = c("black","orange","darkgreen"), aesthetics = "fill") +
+    scale_fill_manual(values = c("black","darkgreen","orange"), aesthetics = "fill") +
     scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
     theme_light()
   
