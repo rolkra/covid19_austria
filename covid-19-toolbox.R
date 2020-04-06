@@ -575,7 +575,7 @@ covid19_plot_infected <- function(data, country = "Austria", title = NA) {
   p <- data_plot %>% 
     ggplot(aes(x = day, y = value, fill = type)) +
     geom_area() +
-    scale_fill_manual(values = c("black","darkgreen","orange"), aesthetics = "fill") +
+    scale_fill_manual(values = c("black","cornflowerblue","tomato"), aesthetics = "fill") +
     scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
     theme_light()
   
