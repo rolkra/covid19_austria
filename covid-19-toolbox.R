@@ -446,7 +446,7 @@ covid19_plot_deaths_ranking <- function(data, top_n = 10, title = NULL)  {
   
   # countries by deaths
     top_deaths <- data %>% 
-      covid19_show_deaths(top_n)
+      covid19_show_deaths_ranking(top_n)
 
   # plot  
   p <- top_deaths %>% 
