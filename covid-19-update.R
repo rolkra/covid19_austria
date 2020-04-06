@@ -9,6 +9,8 @@ suppressWarnings(source("covid-19-toolbox.R"))
 cat("read data...\n")
 confirmed <- covid19_read_confirmed()
 deaths <- covid19_read_deaths()
+recovered <- covid19_read_recovered()
+data <- covid19_combine_data(confirmed, deaths, recovered)
 
 # deaths
 cat("generate plot deaths...\n")
@@ -25,6 +27,10 @@ p2 <- deaths %>%
 p <- (p1 | p2)
 
 p %>% covid19_save_plot("covid-19-deaths.png")
+
+# infected Austria
+p <- data %>% covid19_plot_infected("Austria")
+p %>% covid19_save_plot("covid-19-austria-infected.png")
 
 # world
 cat("generate plot world...\n")

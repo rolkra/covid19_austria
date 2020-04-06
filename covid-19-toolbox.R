@@ -551,3 +551,42 @@ covid19_show_death_rate <- function(data, countries, min_confirmed = 100)  {
     arrange(-deaths_pct)
   
 } #function
+
+#################################################
+## plot infected
+#################################################
+
+covid19_plot_infected <- function(data, country = "Austria", title = NA) {
+  
+  # filter countries
+  data <- data %>% filter(.data$country %in% .env$country)
+  
+  data_plot <- data %>%
+    mutate(infected = confirmed - deaths - recovered) %>%   
+    filter(infected > 0) %>%
+    arrange(country, day) %>% 
+    group_by(country) %>% 
+    mutate(day = row_number()) %>%
+    ungroup() %>% 
+    select(country, date, day, infected, deaths, recovered) %>% 
+    pivot_longer(cols = c(infected, deaths, recovered), names_to = "type")  
+  
+  p <- data_plot %>% 
+    ggplot(aes(x = day, y = value, fill = type)) +
+    geom_area() +
+    scale_fill_manual(values = c("black","orange","darkgreen"), aesthetics = "fill") +
+    scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
+    theme_light()
+  
+  # overrule title?
+  if (!missing(title)) {
+    p <- p + ggtitle(title)
+  } else {
+    p <- p + ggtitle(paste("Covid-19 outbreak in", country))
+  }
+  
+  # output
+  p
+  
+} # covid19_plot_infected
+
