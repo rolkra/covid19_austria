@@ -577,7 +577,7 @@ covid19_plot_infected <- function(data, country = "Austria", title = NA) {
     geom_area() +
     scale_fill_manual(values = c("black","cornflowerblue","tomato"), aesthetics = "fill") +
     scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
-    xlab("Days since outbread") +
+    xlab("Days since outbreak") +
     ylab("Confirmed cases") +
     theme_light()
   
