@@ -39,6 +39,7 @@ p6 <- data %>% covid19_plot_infected("South Africa", title = "South Africa")+ th
 p <- (p1 | p2 | p3) / (p4 | p5 | p6)
 p %>% covid19_save_plot("covid-19-world-infected.png")
 
+# infected Europe
 p7 <- data %>% covid19_plot_infected("Italy", title = "Italy")+ theme(legend.position = "none")
 p8 <- data %>% covid19_plot_infected("Spain", title = "Spain")+ theme(legend.position = "none")
 p9 <- data %>% covid19_plot_infected("United Kingdom", title = "UK")+ theme(legend.position = "none")
@@ -49,6 +50,7 @@ p12 <- data %>% covid19_plot_infected("Belgium", title = "Belgium")+ theme(legen
 p <- (p7 | p8 | p9) / (p10 | p11 | p12)
 p %>% covid19_save_plot("covid-19-europe-infected.png")
 
+# infected europe/east
 p13 <- data %>% covid19_plot_infected("Belarus", title = "Belarus")+ theme(legend.position = "none")
 p14 <- data %>% covid19_plot_infected("Slovenia", title = "Slovenia")+ theme(legend.position = "none")
 p15 <- data %>% covid19_plot_infected("Serbia", title = "Serbia")+ theme(legend.position = "none")
