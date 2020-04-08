@@ -11,6 +11,8 @@ Confirmed Infections are biased (availability of tests, numer of tests per day, 
 
 <img src="covid-19-austria-world.png" alt="Covid-19 Word" width="800">
 
+<img src="covid-19-world-infected.png" alt="Covid-19 Word" width="800">
+
 <img src="covid-19-austria-europe.png" alt="Covid-19 Europe" width="800">
 
 <img src="covid-19-austria-infected.png" alt="Covid-19 Europe" width="800">
