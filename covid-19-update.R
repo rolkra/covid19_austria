@@ -49,7 +49,7 @@ p1 <- data %>% covid19_plot_infected("US", title = "US")+ theme(legend.position 
 p2 <- data %>% covid19_plot_infected("Brazil", title = "Brazil")+ theme(legend.position = "none")
 p3 <- data %>% covid19_plot_infected("Argentina", title = "Argentina")+ theme(legend.position = "none")
 p4 <- data %>% covid19_plot_infected("New Zealand", title = "New Zealand")+ theme(legend.position = "none")
-p5 <- data %>% covid19_plot_infected("Australia", title = "Australia")+ theme(legend.position = "none")
+p5 <- data %>% covid19_plot_infected("Israel", title = "Israel")+ theme(legend.position = "none")
 p6 <- data %>% covid19_plot_infected("South Africa", title = "South Africa")+ theme(legend.position = "none")
 
 p <- (p1 | p2 | p3) / (p4 | p5 | p6) + 
