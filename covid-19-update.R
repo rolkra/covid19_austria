@@ -15,11 +15,13 @@ data <- covid19_combine_data(confirmed, deaths, recovered)
 # deaths
 cat("generate plot deaths...\n")
 p1 <- deaths %>% 
+  mutate(country = ifelse(country == "United Kingdom", "UK", country)) %>% 
   covid19_plot_deaths_ranking(top_n = 20,
                               title = "Covid-19  - deaths")
 
 p2 <- deaths %>% 
-  covid19_plot_deaths(countries = c("Austria","Germany","Italy","US","United Kingdom"), 
+  mutate(country = ifelse(country == "United Kingdom", "UK", country)) %>% 
+  covid19_plot_deaths(countries = c("Austria","Germany","Italy","US","United Kingdom","UK"), 
                       min_deaths = 50, log = TRUE,
                       title = "Covid-19 - deaths (logarithmic)")
 
@@ -29,6 +31,7 @@ p <- (p1 | p2)
 p %>% covid19_save_plot("covid-19-deaths.png")
 
 # infected World
+cat("generate plots infected...\n")
 p1 <- data %>% covid19_plot_infected("China/Hubei", title = "China/Hubei") + theme(legend.position = "none")
 p2 <- data %>% covid19_plot_infected("Korea, South", title = "Korea, South")+ theme(legend.position = "none")
 p3 <- data %>% covid19_plot_infected("Japan", title = "Japan")+ theme(legend.position = "none")
