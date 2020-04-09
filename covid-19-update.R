@@ -78,9 +78,10 @@ p16 <- data %>% covid19_plot_infected("Croatia", title = "Croatia")+ theme(legen
 p17 <- data %>% covid19_plot_infected("Bulgaria", title = "Bulgaria")+ theme(legend.position = "none")
 p18 <- data %>% covid19_plot_infected("North Macedonia", title = "North Macedonia")+ theme(legend.position = "none")
 
-p <- (p13 | p14 | p15) / (p16 | p17 | p18)
-p %>% covid19_save_plot("covid-19-europeeast-infected.png") +
+p <- (p13 | p14 | p15) / (p16 | p17 | p18)+
   plot_annotation(title = "Covid-19 outbreak in Europe/East")
+                  
+p %>% covid19_save_plot("covid-19-europeeast-infected.png")
 
 # infected Austria
 p <- data %>% covid19_plot_infected("Austria")
