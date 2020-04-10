@@ -42,7 +42,8 @@ infected <- c(
  1750, #"2020-04-06"
  1818, #"2020-04-07"
  1869, #"2020-04-08"
- 1924
+ 1924, #"2020-04-09"
+ 1952
 )
 
 # prepare data
@@ -173,10 +174,10 @@ p2 <- data %>%
   ylab("Daily growth in %") + 
 #  ggtitle("Covid-19 outbreak in Vienna") +
   theme_minimal() +
-  annotate("text", 3, 10+1, 
+  annotate("text", 4, 10+1, 
            label = "10% growth",
            size = 2,vjust = "bottom")  +
-  annotate("text", 3, 33+1, 
+  annotate("text", 4, 33+1, 
            label = "33% growth",
            size = 2,vjust = "bottom") 
   
