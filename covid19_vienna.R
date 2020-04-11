@@ -59,9 +59,11 @@ data <- data %>%
   mutate(new_abs = confirmed - lag(confirmed),
          new_pct = new_abs / lag(confirmed) * 100)
 
-p1 <- data %>% covid19_plot_confirmed("Vienna")
-p2 <- data %>% covid19_plot_daily_growth("Vienna")
-p3 <- data %>% covid19_plot_cases(var = new_abs, countries = "Vienna")
-p <- (p1 / p2) | p3
-p %>% covid19_save_plot("covid-19-vienna.png")
+p1 <- data %>% covid19_plot_confirmed("Vienna", title = NULL) +
+                  theme(legend.position = "none")
+p2 <- data %>% covid19_plot_daily_growth("Vienna", title = NULL) 
+p3 <- data %>% covid19_plot_cases(var = new_abs, countries = "Vienna", title = "New cases per day") +
+                  theme(legend.position = "none")
+p <- ((p1 / p2) | p3) + plot_annotation(title = "Covid-19 outbreak in Vienna")
+p %>% covid19_save_plot("covid-19-vienna.png") 
 
