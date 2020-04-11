@@ -93,7 +93,9 @@ suppressWarnings(source("covid19_austria_europe.R"))
 
 # austria
 cat("generate plot austria...\n")
-suppressWarnings(source("covid19_austria.R"))
+p <- confirmed %>% covid19_plot_overview("Austria")
+p %>% covid19_save_plot("covid-19-austria.png")
+#suppressWarnings(source("covid19_austria.R"))
 
 # austria/vienna (update confirmed manually!)
 cat("generate plot vienna...\n")

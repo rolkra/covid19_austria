@@ -536,8 +536,10 @@ covid19_plot_overview <- function(data, country = "Austria", log = FALSE, title 
     xlab("Days since 50 cases")
   
   p3 <- data %>% 
-    covid19_plot_szenarios(country = country,
-                           title = NULL)
+    covid19_plot_cases(var = new_abs, 
+                       countries = country,
+                       title = "New cases per day") +
+    theme(legend.position = "none")
   
   if (!missing(title)) {
     ((p1 / p2) | p3) + plot_annotation(title,
@@ -610,4 +612,68 @@ covid19_plot_infected <- function(data, country = "Austria", title = NA) {
   p
   
 } # covid19_plot_infected
+
+#################################################
+## plot cases
+#################################################
+
+covid19_plot_cases <- function(data, var, countries = "Austria", highlight_country = NA, log = FALSE, min_cases = 50, title = NA) {
+  
+  # filter countries
+  data <- data %>% filter(country %in% countries)
+  
+  # default value for highlight_country
+  if (is.na(highlight_country))  {
+    highlight_country <- countries[1]
+  }
+  
+  # overwrite day
+  data <- data %>% 
+    filter(confirmed >= min_cases) %>% 
+    arrange(country, day) %>% 
+    group_by(country) %>% 
+    mutate(day = row_number()) %>% 
+    ungroup() %>% 
+    mutate(val = {{ var }}) %>% 
+    mutate(val_M = val / 1000000)
+  
+  # plot
+  p <- ggplot(data = data %>% filter(!country %in% highlight_country), 
+              aes(day, val, colour = country)) +
+    geom_line(alpha = 0.7, size = 1.1) +
+    geom_line(data = data %>% filter(country %in% highlight_country),
+              aes(day,val, colour = country), 
+              alpha = 1, size = 1.5) +
+    #geom_line(data = data_line, 
+    #          aes(day,infected), color = "grey", alpha = 0.7) +
+    theme_minimal()
+
+  if (min_cases == 1)  {
+    p <- p + labs(x = paste("Days"), 
+         y = "Confirmed cases") 
+      
+  } else {
+    p <- p + labs(x = paste("Days since", min_cases, "cases"), 
+         y = "Confirmed cases") 
+  }
+    
+  if (log) {
+    p <- p + 
+      scale_y_log10(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
+      ggtitle("Covid-19 outbreak (logarithmic)")
+  } else {
+    p <- p + 
+      scale_y_continuous(labels=function(x) format(x, big.mark = " ", scientific = FALSE)) +
+      ggtitle("Covid-19 outbreak")
+  } #if
+  
+  # overrule title?
+  if (!missing(title)) {
+    p <- p + ggtitle(title)
+  }
+  
+  # output
+  p
+  
+} #covid19_plot_cases
 
