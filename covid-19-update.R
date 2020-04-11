@@ -61,7 +61,7 @@ p6 <- data %>% covid19_plot_infected("Netherlands", title = "Netherlands")+ them
 p7 <- data %>% covid19_plot_infected("Sweden", title = "Sweden")+ theme(legend.position = "none")
 p8 <- data %>% covid19_plot_infected("Belgium", title = "Belgium")+ theme(legend.position = "none")
 p9 <- data %>% covid19_plot_infected("Switzerland", title = "Switzerland")+ theme(legend.position = "none")
-p10 <- data %>% covid19_plot_infected("Hungary", title = "Switzerland")+ theme(legend.position = "none")
+p10 <- data %>% covid19_plot_infected("Hungary", title = "Hungary")+ theme(legend.position = "none")
 p11 <- data %>% covid19_plot_infected("Poland", title = "Poland")+ theme(legend.position = "none")
 p12 <- data %>% covid19_plot_infected("Romania", title = "Romania")+ theme(legend.position = "none")
 
