@@ -38,39 +38,33 @@ p3 <- data %>% covid19_plot_infected("Japan", title = "Japan")+ theme(legend.pos
 p4 <- data %>% covid19_plot_infected("Iran", title = "Iran")+ theme(legend.position = "none")
 p5 <- data %>% covid19_plot_infected("India", title = "India")+ theme(legend.position = "none")
 p6 <- data %>% covid19_plot_infected("Turkey", title = "Turkey")+ theme(legend.position = "none")
+p7 <- data %>% covid19_plot_infected("US", title = "US")+ theme(legend.position = "none")
+p8 <- data %>% covid19_plot_infected("Brazil", title = "Brazil")+ theme(legend.position = "none")
+p9 <- data %>% covid19_plot_infected("Argentina", title = "Argentina")+ theme(legend.position = "none")
+p10 <- data %>% covid19_plot_infected("Russia", title = "Russia")+ theme(legend.position = "none")
+p11 <- data %>% covid19_plot_infected("Israel", title = "Israel")+ theme(legend.position = "none")
+p12 <- data %>% covid19_plot_infected("South Africa", title = "South Africa")+ theme(legend.position = "none")
 
-p <- (p1 | p2 | p3) / (p4 | p5 | p6) +
-  plot_annotation(title = "Covid-19 outbreak in Asia")
+p <- (p1 | p2 | p3) / (p4 | p5 | p6) / (p7 | p8 | p9) / (p10 | p11 | p12) +
+  plot_annotation(title = "Covid-19 outbreak (World)")
 
-p %>% covid19_save_plot("covid-19-asia-infected.png")
+p %>% covid19_save_plot("covid-19-infected-world.png", height = 4*2)
 
-# infected America / Other
-p1 <- data %>% covid19_plot_infected("US", title = "US")+ theme(legend.position = "none")
-p2 <- data %>% covid19_plot_infected("Brazil", title = "Brazil")+ theme(legend.position = "none")
-p3 <- data %>% covid19_plot_infected("Argentina", title = "Argentina")+ theme(legend.position = "none")
-p4 <- data %>% covid19_plot_infected("New Zealand", title = "New Zealand")+ theme(legend.position = "none")
-p5 <- data %>% covid19_plot_infected("Israel", title = "Israel")+ theme(legend.position = "none")
-p6 <- data %>% covid19_plot_infected("South Africa", title = "South Africa")+ theme(legend.position = "none")
-
-p <- (p1 | p2 | p3) / (p4 | p5 | p6) + 
-  plot_annotation(title = "Covid-19 outbreak in America/Other")
-
-p %>% covid19_save_plot("covid-19-america-infected.png")
-
-# Infected Western Europe
+# Infected Europe
 p1 <- data %>% covid19_plot_infected("Italy", title = "Italy")+ theme(legend.position = "none")
 p2 <- data %>% covid19_plot_infected("Spain", title = "Spain")+ theme(legend.position = "none")
-p3 <- data %>% covid19_plot_infected("United Kingdom", title = "UK")+ theme(legend.position = "none")
-p4 <- data %>% covid19_plot_infected("Germany", title = "Germany")+ theme(legend.position = "none")
-p5 <- data %>% covid19_plot_infected("Netherlands", title = "Netherlands")+ theme(legend.position = "none")
-p6 <- data %>% covid19_plot_infected("Belgium", title = "Belgium")+ theme(legend.position = "none")
+p3 <- data %>% covid19_plot_infected("France", title = "France")+ theme(legend.position = "none")
+p4 <- data %>% covid19_plot_infected("United Kingdom", title = "UK")+ theme(legend.position = "none")
+p5 <- data %>% covid19_plot_infected("Germany", title = "Germany")+ theme(legend.position = "none")
+p6 <- data %>% covid19_plot_infected("Netherlands", title = "Netherlands")+ theme(legend.position = "none")
 
-p <- (p1 | p2 | p3) / (p4 | p5 | p6) + 
-  plot_annotation(title = "Covid-19 outbreak in Europe/West")
+p7 <- data %>% covid19_plot_infected("Sweden", title = "Sweden")+ theme(legend.position = "none")
+p8 <- data %>% covid19_plot_infected("Belgium", title = "Belgium")+ theme(legend.position = "none")
+p9 <- data %>% covid19_plot_infected("Switzerland", title = "Switzerland")+ theme(legend.position = "none")
+p10 <- data %>% covid19_plot_infected("Hungary", title = "Switzerland")+ theme(legend.position = "none")
+p11 <- data %>% covid19_plot_infected("Poland", title = "Poland")+ theme(legend.position = "none")
+p12 <- data %>% covid19_plot_infected("Romania", title = "Romania")+ theme(legend.position = "none")
 
-p %>% covid19_save_plot("covid-19-europe-infected.png")
-
-# infected europe/east
 p13 <- data %>% covid19_plot_infected("Belarus", title = "Belarus")+ theme(legend.position = "none")
 p14 <- data %>% covid19_plot_infected("Slovenia", title = "Slovenia")+ theme(legend.position = "none")
 p15 <- data %>% covid19_plot_infected("Serbia", title = "Serbia")+ theme(legend.position = "none")
@@ -78,10 +72,12 @@ p16 <- data %>% covid19_plot_infected("Croatia", title = "Croatia")+ theme(legen
 p17 <- data %>% covid19_plot_infected("Bulgaria", title = "Bulgaria")+ theme(legend.position = "none")
 p18 <- data %>% covid19_plot_infected("North Macedonia", title = "North Macedonia")+ theme(legend.position = "none")
 
-p <- (p13 | p14 | p15) / (p16 | p17 | p18)+
-  plot_annotation(title = "Covid-19 outbreak in Europe/East")
+p <- (p1 | p2 | p3) / (p4 | p5 | p6) / 
+     (p7 | p8 | p9) / (p10 | p11 | p12) /
+     (p13 | p14 | p15) / (p16 | p17 | p18) +
+  plot_annotation(title = "Covid-19 outbreak in Europe")
                   
-p %>% covid19_save_plot("covid-19-europeeast-infected.png")
+p %>% covid19_save_plot("covid-19-infected-europe.png", height = 4*3)
 
 # infected Austria
 p <- data %>% covid19_plot_infected("Austria")

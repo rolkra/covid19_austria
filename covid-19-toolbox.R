@@ -8,6 +8,24 @@ library(patchwork)
 library(lubridate)
 library(scales)
 
+# defined functions -----------------------------
+# covid19_read_file
+# covid19_read_confirmed
+# covid19_read_recovered
+# covid19_read_deaths
+# covid19_combine_data
+# covid19_predict_infections
+# covid19_plot_confirmed
+# covid19_plot_deaths
+# covid19_plot_szenarios
+# covid19_plot_daily_growth
+# covid19_show_deaths_ranking
+# covid19_plot_deaths_ranking
+# covid19_save_plot
+# covid19_plot_overview
+# covid19_show_death_rate
+# covid19_plot_infected
+
 #################################################
 ## read file
 #################################################
@@ -245,7 +263,7 @@ covid19_plot_confirmed <- function(data, countries = "Austria", highlight_countr
   # output
   p
   
-} #covid19_plot_infected
+} #covid19_plot_confirmed
 
 #################################################
 ## plot deaths
@@ -478,11 +496,11 @@ covid19_plot_deaths_ranking <- function(data, top_n = 10, title = NULL)  {
 ## save plot
 #################################################
 
-covid19_save_plot <- function(plot, filename)  {
+covid19_save_plot <- function(plot, filename, width = 7, height = 4)  {
   
   plot %>% ggsave(filename = filename, 
                 device = "png",
-                width = 7, height = 4)
+                width = width, height = height)
 } #function
 
 #################################################
