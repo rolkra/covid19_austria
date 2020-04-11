@@ -8,10 +8,8 @@ CSSE (https://github.com/CSSEGISandData/COVID-19)
 Confirmed Infections are biased (availability of tests, numer of tests per day, test strategy, reporting strategy). The real number of infections may be much higher than confirmed cases due to unreported cases. Furthermore there are signifikant differences between countries regarding social behavior (bowing, handshaking, kissing), family structure, timing of social distancing, complience of people etc.
 
 <img src="covid-19-austria-infected.png" alt="Covid-19 Austria" width="800">
-<img src="covid-19-asia-infected.png" alt="Covid-19 Asia" width="800">
-<img src="covid-19-america-infected.png" alt="Covid-19 America/Other" width="800">
-<img src="covid-19-europe-infected.png" alt="Covid-19 Europe" width="800">
-<img src="covid-19-europeeast-infected.png" alt="Covid-19 Europe" width="800">
+<img src="covid-19-infected-world.png" alt="Covid-19 World" width="800">
+<img src="covid-19-infected-europe.png" alt="Covid-19 Europe" width="800">
 
 <img src="covid-19-deaths.png" alt="Covid-19 Deaths" width="800">
 
