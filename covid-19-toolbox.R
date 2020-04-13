@@ -546,7 +546,8 @@ covid19_plot_overview <- function(data, country = "Austria", log = FALSE, title 
   p3 <- data %>% 
     covid19_plot_cases(var = new_abs, 
                        countries = country,
-                       title = "New cases per day") +
+                       title = NULL,
+                       ylab="New confirmed infections per day") +
     theme(legend.position = "none")
   
   if (!missing(title)) {
@@ -625,7 +626,7 @@ covid19_plot_infected <- function(data, country = "Austria", title = NA) {
 ## plot cases
 #################################################
 
-covid19_plot_cases <- function(data, var, countries = "Austria", highlight_country = NA, log = FALSE, min_cases = 50, title = NA) {
+covid19_plot_cases <- function(data, var, countries = "Austria", highlight_country = NA, log = FALSE, min_cases = 50, title = NA, ylab = NA) {
   
   # filter countries
   data <- data %>% filter(country %in% countries)
@@ -678,6 +679,11 @@ covid19_plot_cases <- function(data, var, countries = "Austria", highlight_count
   # overrule title?
   if (!missing(title)) {
     p <- p + ggtitle(title)
+  }
+
+  # overrule xlab?
+  if (!missing(ylab)) {
+    p <- p + ylab(ylab)
   }
   
   # output
