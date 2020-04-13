@@ -41,9 +41,6 @@ confirmed %>%
     log = FALSE,
     min_confirmed = 100
   )
-
-confirmed %>% 
-  covid19_plot_szenarios(country = "Spain")
   
 confirmed %>% 
   covid19_plot_daily_growth(country = "Austria")
@@ -67,6 +64,8 @@ recovered <- covid19_read_recovered()
 
 data <- covid19_combine_data(confirmed, deaths, recovered)
 data %>% covid19_plot_infected("Austria")
+data %>% covid19_plot_szenarios("Austria")
+
 ```
 
 You may need to install the following R-packages:
