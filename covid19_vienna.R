@@ -66,6 +66,8 @@ p1 <- data %>% covid19_plot_confirmed("Vienna", title = NULL) +
 p2 <- data %>% filter(confirmed>= 50) %>% covid19_plot_daily_growth("Vienna", title = NULL) + xlab("Days since 50 cases")
 p3 <- data %>% covid19_plot_cases(var = new_abs, countries = "Vienna", title = NULL, ylab="New confirmed infections per day") +
                   theme(legend.position = "none")
-p <- ((p1 / p2) | p3) + plot_annotation(title = "Covid-19 outbreak in Vienna")
+p <- ((p1 / p2) | p3) + 
+  plot_annotation(title = "Covid-19 outbreak in Vienna",
+                  caption = "source: https://www.ots.at ('Kennzahlen Wien Corona')")
 p %>% covid19_save_plot("covid-19-vienna.png") 
 
