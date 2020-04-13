@@ -175,6 +175,7 @@ covid19_combine_data <- function(confirmed, deaths, recovered) {
   
   # calculations
   d <- d %>% 
+    mutate(infected = confirmed - recovered - deaths) %>% 
     mutate(deaths_pct = ifelse(confirmed > 0, deaths/confirmed*100, 0)) %>% 
     mutate(recovered_pct = ifelse(confirmed > 0, recovered/confirmed*100, 0))
   
@@ -337,7 +338,7 @@ covid19_plot_szenarios <- function(data, country = "Austria", predict_days = 50,
 
   predict_data <- data %>% 
     filter(country == .env$country) %>% 
-    select(type, day, infected)
+    select(day, infected)
   
   data_33 <- predict_data %>% 
     covid19_predict_infections(infection_rate = 1.33, days = predict_days)
@@ -353,6 +354,7 @@ covid19_plot_szenarios <- function(data, country = "Austria", predict_days = 50,
   
   # combine dataset
   data_plot <- predict_data %>% 
+    mutate(type = "confirmed") %>% 
     bind_rows(data_33, data_20, data_15, data_10)
   
   # visualise
