@@ -65,7 +65,7 @@ covid19_read_file <- function(file = NA, type, raw = FALSE, countries = NA)  {
     group_by(country) %>% 
     mutate(day = row_number())
   
-  # new infections
+  # new confirmed
   data <- data %>% 
     group_by(country) %>% 
     mutate(new_abs = value - lag(value),
@@ -82,7 +82,7 @@ covid19_read_file <- function(file = NA, type, raw = FALSE, countries = NA)  {
   # return data
   data
     
-} #covid19_read_infected
+} #covid19_read_file
 
 #################################################
 ## read confirmed
@@ -178,6 +178,14 @@ covid19_combine_data <- function(confirmed, deaths, recovered) {
     mutate(deaths_pct = ifelse(confirmed > 0, deaths/confirmed*100, 0)) %>% 
     mutate(recovered_pct = ifelse(confirmed > 0, recovered/confirmed*100, 0))
   
+  # add new confirmed
+  d <- d %>% 
+    group_by(country) %>% 
+    mutate(new_abs = confirmed - lag(confirmed),
+           new_pct = new_abs / lag(confirmed) * 100) %>% 
+    ungroup()
+  
+  
   # return
   d
   
@@ -225,19 +233,19 @@ covid19_plot_confirmed <- function(data, countries = "Austria", highlight_countr
   
   # overwrite day
   data <- data %>% 
-    filter(infected >= min_confirmed) %>% 
+    filter(confirmed >= min_confirmed) %>% 
     arrange(country, day) %>% 
     group_by(country) %>% 
     mutate(day = row_number()) %>% 
     ungroup() %>% 
-    mutate(infected_M = infected / 1000000)
+    mutate(confirmed_M = confirmed / 1000000)
   
   # plot
   p <- ggplot(data = data %>% filter(!country %in% highlight_country), 
-         aes(day,infected, colour = country)) +
+         aes(day,confirmed, colour = country)) +
     geom_line(alpha = 0.7, size = 1.1) +
     geom_line(data = data %>% filter(country %in% highlight_country),
-              aes(day,infected, colour = country), 
+              aes(day,confirmed, colour = country), 
               alpha = 1, size = 1.5) +
     #geom_line(data = data_line, 
     #          aes(day,infected), color = "grey", alpha = 0.7) +
@@ -381,23 +389,23 @@ covid19_plot_szenarios <- function(data, country = "Austria", predict_days = 50,
 ## plot daily growth
 #################################################
 
-covid19_plot_daily_growth <- function(data, country = "Austria", min_infected = 50, title = NA)  {
+covid19_plot_daily_growth <- function(data, country = "Austria", min_confirmed = 50, title = NA)  {
   
   # filter countries
   data <- data %>% filter(country == .env$country)
 
   # overwrite day
   data <- data %>% 
-    filter(infected >= 1) %>% 
+    filter(confirmed >= 1) %>% 
     arrange(country, day) %>% 
     group_by(country) %>% 
     mutate(day = row_number()) %>% 
     ungroup() %>% 
-    mutate(infected_M = infected / 1000000)
+    mutate(confirmed_M = confirmed / 1000000)
   
   # daily growth infected
   p <- data %>% 
-    filter(infected >= min_infected) %>% 
+    filter(confirmed >= min_confirmed) %>% 
     ggplot(aes(day, new_pct)) +
     geom_col(fill = "grey") 
   
