@@ -525,7 +525,7 @@ covid19_plot_overview <- function(data, country = "Austria", log = FALSE, title 
     nrow()
   
   if(rows == 0)  {
-    return(paste0("no data found for country '", country,"'\n"))
+    return(paste0("no data found for country '", country))
   }
   
   p1 <- data %>% 
