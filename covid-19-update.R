@@ -80,7 +80,8 @@ p <- (p1 | p2 | p3) / (p4 | p5 | p6) /
 p %>% covid19_save_plot("covid-19-infected-europe.png", height = 4*3)
 
 # infected Austria
-p <- data %>% covid19_plot_infected("Austria")
+title <- paste0("Covid-19 in Austria (",Sys.Date(),")")
+p <- data %>% covid19_plot_infected("Austria", title = title)
 p %>% covid19_save_plot("covid-19-austria-infected.png")
 
 # world
