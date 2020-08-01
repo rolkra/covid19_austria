@@ -21,8 +21,6 @@ Confirmed Infections are biased (availability of tests, numer of tests per day, 
 
 <img src="covid-19-austria.png" alt="Covid-19 Austria" width="800">
 
-<img src="covid-19-vienna.png" alt="Covid-19 Vienna" width="800">
-
 # Covid-19 R-Code Toolbox
 
 You can use this toolbox to explore Covid-19 with R-Code:
