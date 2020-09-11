@@ -18,7 +18,7 @@ countries <- c("Austria","Belarus","Slovenia","Croatia","Serbia","North Macedoni
 title <- paste0("Covid-19 Infections (",Sys.Date(),")")
 p1 <- confirmed %>% 
   covid19_plot_confirmed(countries = countries,
-                         title = "Covid19 Infections") +
+                         title = title) +
   labs(subtitle = "We are tired of the virus, but the virus does't care!")
 
 
