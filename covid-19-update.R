@@ -12,6 +12,23 @@ deaths <- covid19_read_deaths()
 recovered <- covid19_read_recovered()
 data <- covid19_combine_data(confirmed, deaths, recovered)
 
+# A1 dashboard
+cat("generate dashboard...\n")
+countries <- c("Austria","Belarus","Slovenia","Croatia","Serbia","North Macedonia", "Bulgaria")
+p1 <- confirmed %>% 
+  covid19_plot_confirmed(countries = countries,
+                         title = "Covid19 Infections") +
+  labs(subtitle = "We are tired of the virus, but the virus does't care!",
+       caption = "Source: John Hopkins University Github-Repo")
+
+
+p2 <- deaths %>% 
+  covid19_plot_deaths(countries = countries,
+                      title = "Covid19 Deaths")
+p <- p1 / p2
+p1 %>% covid19_save_plot("covid-19-dathboard.png",
+                        width = 7, heigh = 7)
+
 # deaths
 cat("generate plot deaths...\n")
 p1 <- deaths %>% 
