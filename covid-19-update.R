@@ -22,7 +22,7 @@ p1 <- data %>%
                      countries = countries,
                      min_cases = 0,
                      title = title,
-                     ylab="Confirmed infections per day")  +
+                     ylab="Confirmed infections total")  +
   labs(subtitle = "We are tired of the virus, but the virus does't care!")
 
 
