@@ -44,7 +44,8 @@ covid19_read_file <- function(file = NA, type, raw = FALSE, countries = NA)  {
   data <- data %>% 
     pivot_longer(cols = starts_with("X"),
                  names_to = "date") %>% 
-    mutate(date = substr(date,2,8)) %>% 
+    mutate(date_ori = date) %>% 
+    mutate(date = substr(date,2,9)) %>% 
     mutate(date = mdy(date))
   
   # convert factors to character
@@ -651,10 +652,10 @@ covid19_plot_cases <- function(data, var, countries = "Austria", highlight_count
   # plot
   p <- ggplot(data = data %>% filter(!country %in% highlight_country), 
               aes(day, val, colour = country)) +
-    geom_line(alpha = 0.7, size = 1.1) +
+    geom_line(alpha = 0.5, size = 0.7) +
     geom_line(data = data %>% filter(country %in% highlight_country),
               aes(day,val, colour = country), 
-              alpha = 1, size = 1.5) +
+              alpha = 1, size = 1.1) +
     #geom_line(data = data_line, 
     #          aes(day,infected), color = "grey", alpha = 0.7) +
     theme_minimal()
