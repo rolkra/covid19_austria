@@ -10,7 +10,7 @@ raw <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/maste
 work <- raw %>% 
   pivot_longer(cols = starts_with("X"),
                names_to = "date") %>% 
-  mutate(date = substr(date,2,8)) %>% 
+  mutate(date = substr(date,2,9)) %>% 
   mutate(date = mdy(date))
 
 # recode China/Hubei
