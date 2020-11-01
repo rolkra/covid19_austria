@@ -652,10 +652,10 @@ covid19_plot_cases <- function(data, var, countries = "Austria", highlight_count
   # plot
   p <- ggplot(data = data %>% filter(!country %in% highlight_country), 
               aes(day, val, colour = country)) +
-    geom_line(alpha = 0.5, size = 0.7) +
+    geom_line(alpha = 0.5, size = 0.5) +
     geom_line(data = data %>% filter(country %in% highlight_country),
               aes(day,val, colour = country), 
-              alpha = 1, size = 1.1) +
+              alpha = 0.8, size = 1.0) +
     #geom_line(data = data_line, 
     #          aes(day,infected), color = "grey", alpha = 0.7) +
     theme_minimal()
