@@ -23,7 +23,7 @@ p1 <- data %>%
                      min_cases = 0,
                      title = title,
                      ylab="Confirmed infections total")  +
-  labs(subtitle = "Covid is stronger than ever! Let's strike back!")
+  labs(subtitle = "Covid is getting weaker!")
 
 
 
